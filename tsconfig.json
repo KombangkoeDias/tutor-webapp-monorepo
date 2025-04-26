@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@chulatutordream/shared/*": ["packages/shared/*"]
+    }
+  }
+}
