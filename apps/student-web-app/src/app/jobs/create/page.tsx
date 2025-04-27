@@ -144,7 +144,7 @@ const formSchema = z.object({
   creator_email: z
     .string({ required_error: "กรุณากรอกอีเมล" })
     .email({ message: "รูปแบบอีเมลไม่ถูกต้อง" }),
-  line_id: z.string({ required_error: "กรุณากรอกไลน์ ID" }).optional(),
+  line_id: z.string({ required_error: "กรุณากรอกไลน์ ID" }),
   tags: z.array(z.object({ value: z.string(), label: z.string() })).optional(),
 });
 
@@ -384,6 +384,22 @@ function JobCreationForm() {
                       <Input
                         type="email"
                         placeholder="กรุณาระบุอีเมล"
+                        {...field}
+                        className="border-pink-200 focus:border-pink-500 transition-all duration-300"
+                      />
+                    );
+                  }}
+                />
+                <Field
+                  form={form}
+                  label="Line ID"
+                  required
+                  name="line_id"
+                  description="หากมีความจำเป็น แอดมิน จะติดต่อท่านผ่าน line id"
+                  shadCNComponent={(field) => {
+                    return (
+                      <Input
+                        placeholder="กรุณาระบุไลน์ ID"
                         {...field}
                         className="border-pink-200 focus:border-pink-500 transition-all duration-300"
                       />
@@ -1079,11 +1095,13 @@ function JobCreationForm() {
                             label="ไลน์ ID"
                             required
                             name="line_id"
+                            description="ไลน์ ID เดียวกับที่กรอกด้านบน"
                             shadCNComponent={(field) => {
                               return (
                                 <Input
                                   placeholder="กรุณาใส่ line ID"
                                   {...field}
+                                  disabled
                                   className="border-pink-200 focus:border-pink-500 transition-all duration-300"
                                 />
                               );
