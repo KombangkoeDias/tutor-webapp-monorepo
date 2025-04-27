@@ -38,7 +38,7 @@ const SelectField = (props: SelectFieldProps) => {
       placeholder={props.placeholder}
       {...field}
       value={typeof value === "string" ? { label: value, value: value } : value}
-      onChange={(value) => {
+      onChange={(value: selectItem) => {
         if (props.mode === "VALUE_ONLY") {
           onChange(value.value);
         } else {

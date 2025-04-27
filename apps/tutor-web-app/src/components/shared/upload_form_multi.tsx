@@ -1,13 +1,11 @@
 "use client";
-import { Field } from "@/components/shared/form-item";
 import { useDropzone } from "react-dropzone";
 import { Controller } from "react-hook-form";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Input } from "@/components/ui/input";
+import React, { useState } from "react";
 import { Image } from "antd";
 import { FilePdfOutlined } from "@ant-design/icons";
 import { Button } from "../ui/button";
-import { variantButtonClassName } from "@/lib/constants";
+import { variantButtonClassName } from "../../lib/constants";
 import { Download } from "lucide-react";
 import _ from "lodash";
 import { XCircle } from "lucide-react";

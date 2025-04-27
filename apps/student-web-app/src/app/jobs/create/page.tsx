@@ -62,9 +62,10 @@ const formSchema = z.object({
     .string({ required_error: errMsg.surname })
     .nonempty({ message: errMsg.surname }),
   nickname: z.string().optional(),
-  subjectsId: z
-    .string({ required_error: errMsg.subjectsId })
-    .nonempty({ message: errMsg.subjectsId }),
+  subject: z.object(
+    { label: z.string(), value: z.string() },
+    { required_error: errMsg.subjectsId }
+  ),
   note: z
     .string({ required_error: errMsg.note })
     .nonempty({ message: errMsg.note }),
@@ -74,13 +75,19 @@ const formSchema = z.object({
   level1: z
     .string({ required_error: errMsg.level1 })
     .nonempty({ message: errMsg.level1 }),
-  level2: z.string().optional(),
+  level2: z
+    .object({ label: z.string(), value: z.number() })
+    .optional()
+    .nullable(),
   want_to_learn_level1: z
     .string({
       required_error: errMsg.want_to_learn_level1,
     })
     .nonempty({ message: errMsg.want_to_learn_level1 }),
-  want_to_learn_level2: z.string().optional(),
+  want_to_learn_level2: z
+    .object({ label: z.string(), value: z.number() })
+    .optional()
+    .nullable(),
   learner_number: z
     .string({ required_error: errMsg.learner_number })
     .nonempty({ message: errMsg.learner_number }),
@@ -167,7 +174,7 @@ function JobCreationForm() {
       name: undefined,
       surname: undefined,
       nickname: undefined,
-      subjectsId: undefined,
+      subject: undefined,
       note: undefined,
       fundamental: undefined,
       level1: undefined,
@@ -194,7 +201,7 @@ function JobCreationForm() {
   });
 
   // form.watch((values) => {
-  //   console.log("kbd zod", formSchema.safeParse(values));
+  //   console.log("kbd values", values);
   // });
 
   const contact_preference = useWatch({
@@ -246,7 +253,10 @@ function JobCreationForm() {
       Number.parseInt(tag.value)
     );
     // @ts-expect-error
-    requestBody.subjectsId = Number.parseInt(requestBody.subjectsId);
+    requestBody.subjectsId = Number.parseInt(requestBody.subject.value);
+    requestBody.level2 = requestBody.level2?.value;
+    requestBody.want_to_learn_level2 = requestBody.want_to_learn_level2?.value;
+
     requestBody.total_session_count = Number.parseInt(
       requestBody.total_session_count.value
     );
@@ -289,7 +299,9 @@ function JobCreationForm() {
             }
             const token = await executeRecaptcha();
             tokenRef.current = token;
-            await form.handleSubmit(debouncedSubmit)(e);
+            await form.handleSubmit(debouncedSubmit, (error) => {
+              console.log("form validation error", error);
+            })(e);
           }}
           className="max-w-3xl mx-auto mb-4 px-4 sm:px-6"
         >
@@ -396,7 +408,7 @@ function JobCreationForm() {
                 <Field
                   form={form}
                   label="วิชา"
-                  name="subjectsId"
+                  name="subject"
                   required
                   shadCNComponent={(field) => {
                     return (

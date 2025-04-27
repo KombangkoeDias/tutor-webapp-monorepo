@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { Image } from "antd";
 import { FilePdfOutlined } from "@ant-design/icons";
 import { Button } from "../ui/button";
-import { variantButtonClassName } from "@/lib/constants";
+import { variantButtonClassName } from "../../lib/constants";
 import { Download, XCircle } from "lucide-react";
 import { FormDescription } from "../ui/form";
 
