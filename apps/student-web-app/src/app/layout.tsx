@@ -4,7 +4,7 @@ import Header from "@/components/header";
 import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Footer from "@/components/footer";
-import { ConstantProvider } from "@/hooks/constant-context";
+import { ConstantProvider } from "@/chulatutordream/components/hooks/constant-context";
 import { Suspense } from "react";
 
 const queryClient = new QueryClient({

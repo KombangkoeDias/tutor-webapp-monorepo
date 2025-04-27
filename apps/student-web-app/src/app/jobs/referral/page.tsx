@@ -3,7 +3,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { useSharedConstants } from "@/hooks/constant-context";
+import { useSharedConstants } from "@/chulatutordream/components/hooks/constant-context";
 import { jobController } from "@/chulatutordream/services/controller/job";
 import { useQuery } from "@tanstack/react-query";
 import { Spin, Tag } from "antd";
