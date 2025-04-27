@@ -1,13 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { Table, Tag, Button, Input, Space, Typography } from "antd";
-import type { ColumnsType, TableProps } from "antd/es/table";
-import type { FilterConfirmProps } from "antd/es/table/interface";
+import { Table, Tag, Button, Typography } from "antd";
+import type { ColumnsType } from "antd/es/table";
 import { ArrowUpRight, CopyIcon } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { adminController } from "@/services/controller";
-import { CopyOutlined } from "@ant-design/icons";
 import toast from "react-hot-toast";
 import { useAuthRedirect } from "@/components/hooks/use-auth-redirect";
 
@@ -109,6 +106,7 @@ const JobListTable = () => {
           rowKey="id"
           className="border border-gray-200 rounded-lg"
           scroll={{ x: "max-content" }}
+          loading={isFetching}
         />
       </div>
     </div>
