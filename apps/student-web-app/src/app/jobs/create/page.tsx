@@ -158,7 +158,7 @@ function JobCreationForm() {
   const urlSearchParams = useSearchParams();
 
   const code = urlSearchParams.get("utm_ref") ?? undefined;
-  const { executeRecaptcha } = useGoogleReCaptcha();
+  // const { executeRecaptcha } = useGoogleReCaptcha();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [level2Options, setLevel2Options] = useState<any[]>([]);
   const [wantToLearnLevel2Options, setWantToLearnLevel2Options] = useState<
@@ -212,7 +212,7 @@ function JobCreationForm() {
   const { subjects, tags, isLoadingTags } = useSharedConstants();
 
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof formSchema>, token: string) {
+  async function onSubmit(values: z.infer<typeof formSchema>, token?: string) {
     setIsLoading(true);
     const requestBody = _.cloneDeep(values);
     const numberFields = [
@@ -260,7 +260,7 @@ function JobCreationForm() {
     requestBody.total_session_count = Number.parseInt(
       requestBody.total_session_count.value
     );
-    requestBody.token = token;
+    // requestBody.token = token;
     requestBody.referral_code = code;
     await jobController.CreateJob(requestBody).finally(() => {
       setIsLoading(false);
@@ -269,8 +269,8 @@ function JobCreationForm() {
 
   const debouncedSubmit = useCallback(
     _.debounce(async (values) => {
-      if (!tokenRef.current) return;
-      await onSubmit(values, tokenRef.current);
+      // if (!tokenRef.current) return;
+      await onSubmit(values /*tokenRef.current*/);
       setShowSuccessModal(true);
     }, 1000),
     []
@@ -294,11 +294,11 @@ function JobCreationForm() {
         <form
           onSubmit={async (e) => {
             e.preventDefault();
-            if (!executeRecaptcha) {
-              return;
-            }
-            const token = await executeRecaptcha();
-            tokenRef.current = token;
+            // if (!executeRecaptcha) {
+            //   return;
+            // }
+            // const token = await executeRecaptcha();
+            // tokenRef.current = token;
             await form.handleSubmit(debouncedSubmit, (error) => {
               console.log("form validation error", error);
             })(e);
@@ -1175,11 +1175,11 @@ function JobCreationForm() {
 
 export default function JobCreationFormWithCaptcha() {
   return (
-    <GoogleReCaptchaProvider
-      reCaptchaKey="6Lc7V-YqAAAAAJw36pCOOdN0Bl9hxSloNY0guCaq"
-      language="th"
-    >
-      <JobCreationForm />
-    </GoogleReCaptchaProvider>
+    // <GoogleReCaptchaProvider
+    //   reCaptchaKey="6Lc7V-YqAAAAAJw36pCOOdN0Bl9hxSloNY0guCaq"
+    //   language="th"
+    // >
+    <JobCreationForm />
+    // </GoogleReCaptchaProvider>
   );
 }
