@@ -33,7 +33,7 @@ export default function RootLayout({
               href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;700&display=swap"
               rel="stylesheet"
             />
-            <link rel="icon" href="/favicon.png" />
+            <link rel="icon" href="https://i.ibb.co/7NVLT3LT/favicon.png" />
             <title>Chula Tutor Dream</title>
           </head>
           <body>

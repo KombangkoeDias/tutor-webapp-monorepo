@@ -10,7 +10,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { adminController } from "@/services/controller";
 import { useAuthRedirect } from "@/components/hooks/use-auth-redirect";
-import { variantButtonClassName } from "@/lib/constants";
+import { variantButtonClassName } from "@/chulatutordream/lib/constants";
 import { Button } from "@/components/ui/button";
 import _ from "lodash";
 import toast from "react-hot-toast";

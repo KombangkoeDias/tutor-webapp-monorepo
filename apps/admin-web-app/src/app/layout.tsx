@@ -29,7 +29,7 @@ export default function RootLayout({
         <ConstantProvider>
           <html>
             <head>
-              <link rel="icon" href="/favicon.png" />
+              <link rel="icon" href="https://i.ibb.co/99Kgt3d2/favicon.png" />
               <title>Job Tutor Dream</title>
             </head>
             <body>

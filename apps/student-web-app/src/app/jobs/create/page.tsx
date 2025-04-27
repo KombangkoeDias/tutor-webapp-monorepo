@@ -200,9 +200,9 @@ function JobCreationForm() {
     },
   });
 
-  // form.watch((values) => {
-  //   console.log("kbd values", values);
-  // });
+  form.watch((values) => {
+    console.log("kbd values", values);
+  });
 
   const contact_preference = useWatch({
     control: form.control,
@@ -219,9 +219,7 @@ function JobCreationForm() {
       "fee",
       "hours_per_session",
       "learner_number",
-      "level2",
       "session_count_per_week",
-      "want_to_learn_level2",
     ];
 
     for (const fieldName of numberFields) {
