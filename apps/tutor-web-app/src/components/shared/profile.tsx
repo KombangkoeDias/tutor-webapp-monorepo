@@ -1,13 +1,13 @@
 "use client"
 
 import { Form } from "@/components/ui/form"
-import { Field } from "@/components/form/form-item"
-import SelectField from "@/components/form/select"
+import { Field } from "@/components/shared/form-item"
+import SelectField from "@/components/shared/select"
 import { Input } from "@/components/ui/input"
-import { RequiredLabel } from "../form/label"
+import { RequiredLabel } from "./label"
 import { Label } from "../ui/label"
-import { DatePickerComponent } from "../form/date-picker"
-import { TooltipComponent } from "../form/tooltip"
+import { DatePickerComponent } from "./date-picker"
+import { TooltipComponent } from "./tooltip"
 import { Textarea } from "../ui/textarea"
 import { EducationHistory } from "../education-history"
 import { Button } from "../ui/button"
@@ -21,10 +21,9 @@ import { Skeleton, type TourProps, Tour, Button as AntdButton, Modal, Alert, Pop
 import { type Dispatch, type SetStateAction, useCallback, useEffect, useRef, useState } from "react"
 import { CheckCircle } from "lucide-react"
 import { EditOutlined } from "@ant-design/icons"
-import ReadOnlyFormItem from "../form/read-only-item"
+import ReadOnlyFormItem from "./read-only-item"
 import { useSearchParams } from "next/navigation"
 import { scrollToTop } from "@/lib/utils"
-import { useLocationConstants } from "../hooks/location-context"
 import { useLoggedIn } from "../hooks/login-context"
 import _ from "lodash"
 import { UploadFormSingle } from "./upload_form"
@@ -33,7 +32,7 @@ import toast from "react-hot-toast"
 import { AddressComponent } from "../form/address"
 import { cn } from "@/lib/utils"
 import { motion } from "framer-motion";
-import ProfilePictureUploader from "../form/profile_pic"
+import ProfilePictureUploader from "./profile_pic"
 
 
 // Add the following styles to your SelectField component
@@ -505,6 +504,8 @@ export default function TutorProfileForm({
                   readOnly={readOnly}
                   profilePage={profilePage}
                   selectStyles={selectStyles}
+                  className="border-teal-200 focus:border-teal-400 focus:ring-1 focus:ring-teal-400"
+                  popOverDisabled={profilePage && tutor?.admin_verified}
                 />
               </div>
             </motion.div>

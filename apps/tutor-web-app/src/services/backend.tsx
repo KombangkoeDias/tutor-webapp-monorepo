@@ -1,4 +1,4 @@
-import axiosClient from "@/services/http-client";
+import axiosClient from "./http-client";
 import { AxiosError } from "axios";
 
 export enum APIStatus {
@@ -58,6 +58,10 @@ export const ENDPOINTS = {
     `/shared/amphoes?provinceId=${provinceId}`,
   GET_TAMBONS_BY_AMPHOE: (amphoeId: number) =>
     `/shared/tambons?amphoeId=${amphoeId}`,
+  GET_RESERVATION_LIST_ENDPOINT: "/reservation/list",
+  APPROVE_RESERVATION_ENDPOINT: "/reservation/approve",
+  CREATE_JOB_ENDPOINT: "/job/create",
+  GET_JOB_REFERRAL: "/job/search_by_referral",
 };
 
 export const toastCaption = {

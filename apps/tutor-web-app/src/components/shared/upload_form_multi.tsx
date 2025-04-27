@@ -1,5 +1,5 @@
 "use client";
-import { Field } from "@/components/form/form-item";
+import { Field } from "@/components/shared/form-item";
 import { useDropzone } from "react-dropzone";
 import { Controller } from "react-hook-form";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";

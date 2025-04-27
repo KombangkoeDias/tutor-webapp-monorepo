@@ -3,7 +3,7 @@
 import { theme } from "antd";
 import { useLocationConstants } from "../hooks/location-context";
 import { Input } from "../ui/input";
-import { Field } from "./form-item";
+import { Field } from "../shared/form-item";
 import Select from "react-select";
 
 type AddressComponentProps = {

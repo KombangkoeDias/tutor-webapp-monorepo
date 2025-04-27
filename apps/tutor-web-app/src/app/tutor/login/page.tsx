@@ -8,8 +8,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export const JWT_TOKEN_KEY = "JWTToken";
-
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -37,7 +35,7 @@ const LoginForm = () => {
               password,
             });
             if (resp.token) {
-              localStorage?.setItem(JWT_TOKEN_KEY, resp.token);
+              localStorage?.setItem(, resp.token);
               setTutor(resp.tutor);
               setLoggedIn(true);
             } else {

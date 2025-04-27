@@ -1,5 +1,5 @@
 "use client";
-import { JWT_TOKEN_KEY } from "@/app/tutor/login/page";
+import { JWT_TOKEN_KEY } from "@/services/http-client";
 import { tutorController } from "@/services/controller/tutor";
 import React, {
   createContext,

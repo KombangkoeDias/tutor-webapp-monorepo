@@ -35,6 +35,11 @@ class JobController extends BaseController {
     return this.handleResponse(resp);
   }
 
+  protected async CreateJob(data: any): Promise<any> {
+    const resp = await POST(ENDPOINTS.CREATE_JOB_ENDPOINT, data);
+    return this.handleResponse(resp);
+  }
+
   public async GetJob(id: number) {
     const resp = await GET(ENDPOINTS.GET_JOB_BY_ID_ENDPOINT(id));
     return this.handleResponse(resp);
@@ -47,6 +52,13 @@ class JobController extends BaseController {
 
   public async GetTags() {
     const resp = await GET(ENDPOINTS.GET_TAGS_ENDPOINT);
+    return this.handleResponse(resp);
+  }
+
+  public async GetAllJobReferral(referral_code: string) {
+    const resp = await GET(
+      ENDPOINTS.GET_JOB_REFERRAL + `?referral_code=${referral_code}`
+    );
     return this.handleResponse(resp);
   }
 }
@@ -64,6 +76,13 @@ class JobControllerToaster extends JobController {
     return toast.promise(
       super.ReserveJob(jobId, proposition),
       this.getToastConfig("กำลังจองงาน")
+    );
+  }
+
+  public async CreateJob(data: any): Promise<any> {
+    return toast.promise(
+      super.CreateJob(data),
+      this.getToastConfig("กำลังสร้างงาน")
     );
   }
 }
