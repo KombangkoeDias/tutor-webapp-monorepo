@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import { adminController } from "@/services/controller";
 import { CopyOutlined } from "@ant-design/icons";
 import toast from "react-hot-toast";
+import { useAuthRedirect } from "@/components/hooks/use-auth-redirect";
 
 const { Title } = Typography;
 
@@ -20,6 +21,7 @@ interface JobData {
 }
 
 const JobListTable = () => {
+  useAuthRedirect();
   const { data, isFetching, refetch } = useQuery({
     queryKey: ["getAllJobList"],
     queryFn: async () => {
@@ -41,7 +43,7 @@ const JobListTable = () => {
       title: "Description",
       dataIndex: "description",
       key: "description",
-      width: "50%",
+      width: "300px",
     },
     {
       title: "จำนวนติวเตอร์ที่จองงาน",
@@ -52,7 +54,6 @@ const JobListTable = () => {
         const color = reservations > 0 ? "green" : "volcano";
         return <Tag color={color}>{reservations}</Tag>;
       },
-      width: "15%",
     },
     {
       title: "ลิงค์เลือกติวเตอร์",
@@ -89,7 +90,7 @@ const JobListTable = () => {
           </>
         );
       },
-      width: "25%",
+      fixed: "right",
     },
   ];
 
