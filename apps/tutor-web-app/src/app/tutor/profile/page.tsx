@@ -8,8 +8,8 @@ import { useAuthRedirect } from "@/components/hooks/use-auth-redirect";
 import {
   convertBackendToFormData,
   convertFormDataToBackend,
-  uploadAllFiles,
 } from "@/components/shared/form_data";
+import { uploadAllFiles } from "@/components/shared/form_data";
 import TutorProfileForm, {
   tutorProfileFormSchemaForUpdate,
 } from "@/components/shared/profile";

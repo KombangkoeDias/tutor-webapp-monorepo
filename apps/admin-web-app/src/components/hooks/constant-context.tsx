@@ -1,5 +1,5 @@
 "use client";
-import { jobController } from "@/chulatutordream/services/controller/job";
+import { jobController } from "@/services/controller";
 import { useQuery } from "@tanstack/react-query";
 import React, { createContext, useContext, ReactNode } from "react";
 
@@ -17,6 +17,8 @@ interface ConstantContextType {
   isLoadingTags: boolean;
   subjects: { [key: number]: string };
   tags: { [key: number]: string };
+  refetchSubjects: () => void;
+  refetchTags: () => void;
 }
 
 // Create the context with default values
@@ -26,7 +28,11 @@ const ConstantContext = createContext<ConstantContextType | undefined>(
 
 // Provider component
 export const ConstantProvider = ({ children }: { children: ReactNode }) => {
-  const { data: subjects, isFetching: isLoadingSubjects } = useQuery({
+  const {
+    data: subjects,
+    isFetching: isLoadingSubjects,
+    refetch: refetchSubjects,
+  } = useQuery({
     queryKey: ["getAllSubjects"],
     queryFn: async () => {
       return jobController.GetSubjects();
@@ -34,7 +40,11 @@ export const ConstantProvider = ({ children }: { children: ReactNode }) => {
     initialData: {},
   });
 
-  const { data: tags, isFetching: isLoadingTags } = useQuery({
+  const {
+    data: tags,
+    isFetching: isLoadingTags,
+    refetch: refetchTags,
+  } = useQuery({
     queryKey: ["tags"],
     queryFn: async () => {
       return jobController.GetTags();
@@ -46,7 +56,15 @@ export const ConstantProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <ConstantContext.Provider
-      value={{ subjects, tags, isLoading, isLoadingSubjects, isLoadingTags }}
+      value={{
+        subjects,
+        tags,
+        isLoading,
+        isLoadingSubjects,
+        isLoadingTags,
+        refetchSubjects,
+        refetchTags,
+      }}
     >
       {children}
     </ConstantContext.Provider>
@@ -57,9 +75,7 @@ export const ConstantProvider = ({ children }: { children: ReactNode }) => {
 export const useSharedConstants = () => {
   const context = useContext(ConstantContext);
   if (!context) {
-    throw new Error(
-      "useSharedConstants must be used within a ConstantProvider"
-    );
+    throw new Error("useLoggedIn must be used within a LoggedInProvider");
   }
   return context;
 };

@@ -13,13 +13,8 @@ import TutorProfileForm, {
   tutorProfileFormSchemaForSignUp,
 } from "@/components/shared/profile";
 import toast from "react-hot-toast";
-import {
-  convertFormDataToBackend,
-  getFileNameFromR2Link,
-  uploadAllFiles,
-  uploadImage,
-  uploadImages,
-} from "@/components/shared/form_data";
+import { convertFormDataToBackend } from "@/components/shared/form_data";
+import { uploadAllFiles } from "@/components/shared/form_data";
 
 export default function TutorRegistrationForm() {
   const router = useRouter();

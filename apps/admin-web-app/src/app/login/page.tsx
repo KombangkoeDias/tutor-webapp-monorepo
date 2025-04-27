@@ -1,10 +1,10 @@
 "use client";
 
+import { JWT_TOKEN_KEY } from "@/chulatutordream/services/http-client";
 import { useLoggedIn } from "@/components/hooks/login-context";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { tutorController } from "@/services/controller/tutor";
-import { JWT_TOKEN_KEY } from "@/services/http-client";
+import { adminController } from "@/services/controller";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -25,22 +25,18 @@ const LoginForm = () => {
   return (
     <div className="min-h-[calc(100vh-64px)] flex justify-center p-4">
       <div className="w-full max-w-md space-y-6">
-        <h1 className="text-2xl font-semibold mb-8">เข้าสู่ระบบติวเตอร์</h1>
+        <h1 className="text-2xl font-semibold mb-8">เข้าสู่ระบบ</h1>
 
         <form
           className="space-y-4"
           onSubmit={async (e) => {
             e.preventDefault();
-            const resp = await tutorController.Login({
-              email: username,
-              password,
-            });
+            const resp = await adminController.Login(username, password);
             if (resp.token) {
+              console.log("kbd in");
               localStorage?.setItem(JWT_TOKEN_KEY, resp.token);
-              setTutor(resp.tutor);
               setLoggedIn(true);
             } else {
-              setTutor(undefined);
               setLoggedIn(false);
             }
           }}
@@ -93,12 +89,6 @@ const LoginForm = () => {
             </div>
           )} */}
         </form>
-        <p className="text-sm text-center text-gray-600">
-          ยังไม่มี account ใช่หรือไม่?{" "}
-          <Link href="/tutor/signup" className="text-[#4caf4f] hover:underline">
-            สมัครสมาชิก
-          </Link>
-        </p>
       </div>
     </div>
   );

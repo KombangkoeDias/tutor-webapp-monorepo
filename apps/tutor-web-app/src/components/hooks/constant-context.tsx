@@ -1,5 +1,5 @@
 "use client";
-import { jobController } from "@/services/controller/job";
+import { jobController } from "../../services/controller/job";
 import { useQuery } from "@tanstack/react-query";
 import React, { createContext, useContext, ReactNode } from "react";
 
