@@ -214,7 +214,7 @@ function JobCreationForm() {
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>, token: string) {
     setIsLoading(true);
-    const requestBody = _.cloneDeep(values);
+    let requestBody = _.cloneDeep(values);
     const numberFields = [
       "fee",
       "hours_per_session",
@@ -262,6 +262,7 @@ function JobCreationForm() {
     );
     requestBody.token = token;
     requestBody.referral_code = code;
+    requestBody = _.omit(requestBody, ["subject"]);
     await jobController.CreateJob(requestBody).finally(() => {
       setIsLoading(false);
     });
