@@ -208,6 +208,7 @@ function JobCreationForm() {
       level2: undefined,
       want_to_learn_level1: undefined,
       want_to_learn_level2: undefined,
+      learn_language: "ไทย",
       learner_number: undefined,
       school: undefined,
       available_date_time: undefined,
@@ -227,9 +228,9 @@ function JobCreationForm() {
     },
   });
 
-  form.watch((values) => {
-    console.log("kbd values", values);
-  });
+  // form.watch((values) => {
+  //   console.log("kbd values", values);
+  // });
 
   const contact_preference = useWatch({
     control: form.control,
