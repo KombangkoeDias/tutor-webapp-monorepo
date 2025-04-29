@@ -412,6 +412,24 @@ function TutorCard({
               </TabsContent>
             </Tabs>
           </div>
+          {activeTabHasMoreThanFiveItems() && (
+            <button
+              onClick={() => setExpanded(!expanded)}
+              className="w-full py-2 px-4 bg-gray-50 hover:bg-gray-100 flex items-center justify-center text-sm text-gray-600 transition-colors mt-auto"
+            >
+              {expanded ? (
+                <>
+                  <span>แสดงน้อยลง</span>
+                  <ChevronUp className="ml-2 h-4 w-4" />
+                </>
+              ) : (
+                <>
+                  <span>แสดงเพิ่มเติม</span>
+                  <ChevronDown className="ml-2 h-4 w-4" />
+                </>
+              )}
+            </button>
+          )}
         </CardContent>
       </Card>
     </motion.div>
@@ -481,6 +499,44 @@ const tutors = [
     ],
   },
   {
+    name: "พี่ป้าง",
+    image: "/tutors/พี่ป้าง.png",
+    education: [
+      "Beihang University คณะ  Electronic Information (ได้รับทุนเต็มจำนวน)",
+      "นักเรียนทุนวิทย์-คณิตโครงการวมว. โรงเรียนสวนกุหลาบวิทยาลัย รังสิต (GPA 3.89)",
+      "โรงเรียนเทพศิรินทร์ ร่มเกล้า (GPA 3.92)",
+      "ติดคณะวิศวกรรมศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย, มหาวิทยาลัยมหิดลล, มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี",
+    ],
+    experience: [
+      "ประสบการณ์การสอน 2 ปี วิชาคณิต วิทยาศาสตร์ ฟิสิกส์ เคมี สอนเข้าม.1 ห้องธรรมดาและ Gifted, ม.4 ห้องวิทย์-คณิต โรงเรียนแข่งขันสูงต่างๆ และติวเพื่อเพิ่มเกรดในห้องเรียน",
+    ],
+    achievements: [
+      "Duolingo english test: 110/160 (ระดับภาษาอังกฤษ)",
+      "แข่งขัน IJSO19th ได้เข้ารอบ 60 คนสุดท้ายของประเทศ",
+      "เข้าอบรมสอวนฟิสิกส์.ค่าย 1 และ 2 ประจําปีการศึกษา 2565",
+      "WMI (World Mathematics Invitational) รางวัล: ได้รางวัลเหรียญทอง",
+      "แข่งขันตอบปัญหาวิทยาศาสตร์ ระดับมัธยมศึกษาตอนปลาย ณ มหาวิทยาลัยวไลยอลงกรณ์ รางวัล : รางวัลชนะเลิศอันดับที่ 1",
+      "แข่งขันตอบปัญหาวิทยาศาสตร์และคณิตศาสตร์ ระดับมัธยมศึกษาตอนปลาย ณ มหาวิทยาลัยเทคโนโลยีราชมงคลธัญบุรี รางวัล : รางวัลรองชนะเลิศอันดับที่ 2",
+      "การแข่งขันโครงงานวิศวกรรมไฟฟ้า CUEE camp 2024 รางวัล : รางวัลรองชนะเลิศอันดับที่ 1",
+      "CHANGE INNOVATION AWARDS 2024 รางวัล: รางวัลระดับเหรียญเงิน อันดับที่ 38 จากทั้งหมด 131 ทีม",
+      "FIAC (2024) รางวัล: ได้รับการตีพิมพ์เผยแพร่บทความวิจัย",
+      "PACCON 2024 รางวัล: ได้เข้าร่วมนำเสนอผลงาน",
+      "CUIIC 2024 รางวัล: ได้รางวัลชมเชย",
+      "14th SCiUS Forum รางวัล : ได้รับรางวัลเหรียญเงิน",
+      "Thailand Cyber Top Talent 2024 รางวัล: ได้อันดับที่ 33 จาก 268 ทีม",
+      "Asian Try Zero-G รางวัล: ได้เข้าร่วมการแข่งขัน ผู้จัด: สวทช. และ JAXA",
+      "Young founder all-star hackathon ได้รางวัลรองชนะเลิศอันดับที่1",
+      "สมาชิก POSN.SKR(เพจให้ความรู้ด้านการสอบ สอวน.",
+      `โครงงานที่เคยทำ 
+    1.  Extraction of bioactive protein from fish head using enzymatic hydrolysis
+    2. Smart mobile fan be more cool 
+    3. เครื่องกระตุ้นหัวใจอัตโนมัติ
+    4. Wildfire Tracking and Environment Surveillance CubeSat
+    `,
+    ],
+    subjects: ["คณิตศาสตร์", "วิทยาศาสตร์", "ฟิสิกส์", "เคมี"],
+  },
+  {
     name: "พี่กิ๊ฟ",
     image: "/tutors/พี่กิฟท์.jpg",
     education: [
@@ -498,6 +554,7 @@ const tutors = [
     achievements: ["ติวสอบเข้าEP สามเสน ม.1 (นักเรียนสอบติด)"],
     subjects: ["ภาษาญี่ปุ่น", "ภาษาไทย", "ภาษาอังกฤษ", "สังคมศึกษา"],
   },
+
   {
     name: "พี่พล",
     image: "/tutors/พี่พล.jpg",

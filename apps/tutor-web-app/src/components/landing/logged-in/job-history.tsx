@@ -46,6 +46,7 @@ import { UploadFormSingle } from "@/components/shared/upload_form";
 import { useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
 // enum
 export enum JobHistoryTableMode {
   CONCISE = "concise",
@@ -123,7 +124,7 @@ export default function JobHistoryTable({
 
   const cancelReservation = async (reservationId: number) => {
     await tutorController.cancelReservation(reservationId);
-    refetch();
+    refetchReservationHistory();
   };
 
   var columns: TableColumnsType<JobReservation> = [
@@ -220,7 +221,7 @@ export default function JobHistoryTable({
             )
           ) {
             return (
-              <div className="z-10">
+              <div className="z-10 flex justify-center">
                 <Button
                   danger
                   ghost
@@ -262,8 +263,10 @@ export default function JobHistoryTable({
           } else if (record.status === ReservationStatus.REFUNDED) {
             return (
               <div>
-                <div>จำนวนเงินที่ refund: {record.refunded_amount} บาท</div>
-                <div className="flex justify-center">
+                <div className="text-center">
+                  จำนวนเงินที่ refund: {record.refunded_amount} บาท
+                </div>
+                <div className="flex justify-center mb-2">
                   <AntdImage height={150} src={record.refunded_receipt} />
                 </div>
                 <div className="flex justify-center">ใบเสร็จโอนเงิน</div>
@@ -312,13 +315,22 @@ export default function JobHistoryTable({
       return (
         <div className="flex flex-col items-center justify-center">
           <Button
-            className={variantButtonClassName}
+            className={cn(variantButtonClassName, "mb-2")}
             onClick={() => {
               setReservationId(record.id.toString());
               setIsPaymentModalOpen(true);
             }}
           >
             จ่ายเงินค่าแนะนำ
+          </Button>
+          <Button
+            danger
+            ghost
+            onClick={() => {
+              cancelReservation(record.id);
+            }}
+          >
+            ยกเลิกการจอง
           </Button>
         </div>
       );
@@ -337,16 +349,28 @@ export default function JobHistoryTable({
         </div>
         <br />
         {record.payment_status === PaymentStatus.FAILED && (
-          <Button
-            type="primary"
-            ghost
-            onClick={() => {
-              setReservationId(record.id.toString());
-              setIsPaymentModalOpen(true);
-            }}
-          >
-            จ่ายเงินค่าแนะนำอีกครั้ง
-          </Button>
+          <>
+            <Button
+              className="mb-2"
+              type="primary"
+              ghost
+              onClick={() => {
+                setReservationId(record.id.toString());
+                setIsPaymentModalOpen(true);
+              }}
+            >
+              จ่ายเงินค่าแนะนำอีกครั้ง
+            </Button>
+            <Button
+              danger
+              ghost
+              onClick={() => {
+                cancelReservation(record.id);
+              }}
+            >
+              ยกเลิกการจอง
+            </Button>
+          </>
         )}
       </div>
     );
@@ -449,9 +473,8 @@ function PaymentModal({
   const { data, error, isFetching, isRefetching, refetch } = useQuery({
     queryKey: ["reservation", reservationId],
     queryFn: async () => {
-      const resp = await reservationController.GetReservationById(
-        reservationId
-      );
+      const resp =
+        await reservationController.GetReservationById(reservationId);
 
       return resp;
     },
@@ -637,9 +660,8 @@ function JobContactModal({
   const { data, error, isFetching, isRefetching, refetch } = useQuery({
     queryKey: ["reservation", reservationId, 2],
     queryFn: async () => {
-      const resp = await reservationController.GetReservationById(
-        reservationId
-      );
+      const resp =
+        await reservationController.GetReservationById(reservationId);
       return resp;
     },
     initialData: null,

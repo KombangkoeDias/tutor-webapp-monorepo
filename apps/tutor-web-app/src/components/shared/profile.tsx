@@ -77,7 +77,7 @@ const errorMessages = {
 }
 
 export const schema = z.object({
-  profile_pic_original: z.any({required_error: "กรุณาเลือกรูปโปรไฟล์"}),
+  profile_pic_original: z.string({required_error: "กรุณาเลือกรูปโปรไฟล์"}).nonempty({message: "กรุณาเลือกรูปโปรไฟล์"}),
   profile_pic_crop_setting: z.string().optional(),
   profile_pic_original_url: z.string().optional().nullable(),
 
@@ -365,6 +365,11 @@ export default function TutorProfileForm({
                 readOnly={readOnly}
                 profilePage={profilePage}
               />
+              {form.formState.errors["profile_pic_original"] && (
+              <p className="text-red-500 text-sm mt-2">
+                {form.formState.errors["profile_pic_original"].message as string}
+              </p>
+            )}
             </div>
             <motion.div variants={fadeIn} className="mb-2 p-4 border-l-4 border-teal-200">
               <h2 className="text-lg font-semibold text-teal-700 mb-4 flex items-center">
