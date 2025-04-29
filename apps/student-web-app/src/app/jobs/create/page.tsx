@@ -16,10 +16,6 @@ import { TooltipComponent } from "@/chulatutordream/components/shared/tooltip";
 import { jobController } from "@/chulatutordream/services/controller/job";
 import { useSharedConstants } from "@/chulatutordream/components/hooks/constant-context";
 import { Input } from "@/components/ui/input";
-import {
-  GoogleReCaptchaProvider,
-  useGoogleReCaptcha,
-} from "react-google-recaptcha-v3";
 import { Checkbox, Modal } from "antd";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import { useSearchParams } from "next/navigation";
@@ -42,6 +38,7 @@ const errMsg = {
   fundamental: "กรุณาเลือกพื้นฐาน",
   level1: "กรุณาเลือกระดับชั้น",
   want_to_learn_level1: "กรุณากรอกระดับชั้นที่ต้องการเรียน",
+  learn_language: "กรุณากรอกภาษาที่ต้องการให้ติวเตอร์ใช้สอน",
   learner_number: "กรุณาระบุจำนวนผู้เรียน",
   school: "กรุณากรอกโรงเรียน/มหาวิทยาลัย",
   available_date_time: "กรุณากรอกวันและเวลาที่สะดวก",
@@ -88,6 +85,9 @@ const formSchema = z.object({
     .object({ label: z.string(), value: z.number() })
     .optional()
     .nullable(),
+  learn_language: z
+    .string({ required_error: errMsg.learn_language })
+    .nonempty({ message: errMsg.learn_language }),
   learner_number: z
     .string({ required_error: errMsg.learner_number })
     .nonempty({ message: errMsg.learner_number }),
@@ -151,6 +151,33 @@ const formSchema = z.object({
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0 },
+};
+
+const selectStyles = {
+  control: (base) => ({
+    ...base,
+    borderColor: "#f9a8d4",
+    boxShadow: "none",
+    "&:hover": {
+      borderColor: "#ec4899",
+    },
+  }),
+  multiValue: (base) => ({
+    ...base,
+    backgroundColor: "#fce7f3",
+  }),
+  multiValueLabel: (base) => ({
+    ...base,
+    color: "#be185d",
+  }),
+  multiValueRemove: (base) => ({
+    ...base,
+    color: "#be185d",
+    "&:hover": {
+      backgroundColor: "#fbcfe8",
+      color: "#9d174d",
+    },
+  }),
 };
 
 function JobCreationForm() {
@@ -438,6 +465,7 @@ function JobCreationForm() {
                             })
                           )}
                           className="border-pink-200"
+                          selectStyles={selectStyles}
                         />
                       </div>
                     );
@@ -460,24 +488,19 @@ function JobCreationForm() {
                 />
                 <Field
                   form={form}
-                  label="พื้นฐานผู้เรียน"
+                  label="ต้องการให้ติวเตอร์สอนเป็นภาษา"
                   required
-                  name="fundamental"
+                  name="learn_language"
                   shadCNComponent={(field) => {
                     return (
                       <div className="w-full max-w-sm">
                         <SelectField
                           placeholder="กรุณาเลือกพื้นฐาน"
                           field={field}
-                          options={[
-                            "ดีมาก",
-                            "ดี",
-                            "ปานกลาง",
-                            "ค่อนข้างอ่อน",
-                            "อ่อน",
-                          ]}
+                          options={["ไทย", "อังกฤษ", "จีน"]}
                           className="border-pink-200"
                           mode="VALUE_ONLY"
+                          selectStyles={selectStyles}
                         />
                       </div>
                     );
@@ -537,6 +560,7 @@ function JobCreationForm() {
                         ]}
                         className="border-pink-200"
                         mode="VALUE_ONLY"
+                        selectStyles={selectStyles}
                       />
                     );
                   }}
@@ -554,6 +578,7 @@ function JobCreationForm() {
                           field={field}
                           options={level2Options}
                           className="border-pink-200"
+                          selectStyles={selectStyles}
                         />
                       );
                     }}
@@ -612,6 +637,7 @@ function JobCreationForm() {
                         ]}
                         className="border-pink-200"
                         mode="VALUE_ONLY"
+                        selectStyles={selectStyles}
                       />
                     );
                   }}
@@ -629,6 +655,7 @@ function JobCreationForm() {
                           field={field}
                           options={wantToLearnLevel2Options}
                           className="border-pink-200"
+                          selectStyles={selectStyles}
                         />
                       );
                     }}
@@ -684,6 +711,32 @@ function JobCreationForm() {
                         placeholder="กรุณาระบุวันเวลาที่สะดวก"
                         className="border-pink-200 focus:border-pink-500 transition-all duration-300"
                       />
+                    );
+                  }}
+                />
+                <Field
+                  form={form}
+                  label="พื้นฐานผู้เรียน"
+                  required
+                  name="fundamental"
+                  shadCNComponent={(field) => {
+                    return (
+                      <div className="w-full max-w-sm">
+                        <SelectField
+                          placeholder="กรุณาเลือกพื้นฐาน"
+                          field={field}
+                          options={[
+                            "ดีมาก",
+                            "ดี",
+                            "ปานกลาง",
+                            "ค่อนข้างอ่อน",
+                            "อ่อน",
+                          ]}
+                          className="border-pink-200"
+                          mode="VALUE_ONLY"
+                          selectStyles={selectStyles}
+                        />
+                      </div>
                     );
                   }}
                 />
@@ -907,32 +960,7 @@ function JobCreationForm() {
                           isMulti
                           closeMenuOnSelect={false}
                           className="text-black"
-                          styles={{
-                            control: (base) => ({
-                              ...base,
-                              borderColor: "#f9a8d4",
-                              boxShadow: "none",
-                              "&:hover": {
-                                borderColor: "#ec4899",
-                              },
-                            }),
-                            multiValue: (base) => ({
-                              ...base,
-                              backgroundColor: "#fce7f3",
-                            }),
-                            multiValueLabel: (base) => ({
-                              ...base,
-                              color: "#be185d",
-                            }),
-                            multiValueRemove: (base) => ({
-                              ...base,
-                              color: "#be185d",
-                              "&:hover": {
-                                backgroundColor: "#fbcfe8",
-                                color: "#9d174d",
-                              },
-                            }),
-                          }}
+                          styles={selectStyles}
                         />
                       </div>
                     );
@@ -979,32 +1007,7 @@ function JobCreationForm() {
                           isMulti
                           closeMenuOnSelect={false}
                           className="text-black"
-                          styles={{
-                            control: (base) => ({
-                              ...base,
-                              borderColor: "#f9a8d4",
-                              boxShadow: "none",
-                              "&:hover": {
-                                borderColor: "#ec4899",
-                              },
-                            }),
-                            multiValue: (base) => ({
-                              ...base,
-                              backgroundColor: "#fce7f3",
-                            }),
-                            multiValueLabel: (base) => ({
-                              ...base,
-                              color: "#be185d",
-                            }),
-                            multiValueRemove: (base) => ({
-                              ...base,
-                              color: "#be185d",
-                              "&:hover": {
-                                backgroundColor: "#fbcfe8",
-                                color: "#9d174d",
-                              },
-                            }),
-                          }}
+                          styles={selectStyles}
                         />
                       </div>
                     );
