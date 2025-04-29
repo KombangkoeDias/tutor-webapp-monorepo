@@ -30,13 +30,13 @@ export default function () {
   };
 
   const handleGenerateLink = async (code: string) => {
-    const baseLink = "https://test.chulatutordream.com"; // Replace with your actual URL
+    const baseLink = "https://chulatutordream.com"; // Replace with your actual URL
     const link = `${baseLink}/jobs/create?utm_ref=${code}`;
     await copyToClipboard(link);
   };
 
   const handleListReferredJobsLink = async (code: string) => {
-    const baseLink = "https://test.chulatutordream.com"; // Replace with your actual URL
+    const baseLink = "https://chulatutordream.com"; // Replace with your actual URL
     const link = `${baseLink}/jobs/referral?utm_ref=${code}`;
     await copyToClipboard(link);
   };
