@@ -195,6 +195,10 @@ const JobDrawer: FC<JobDrawerProps> = ({
           />
           <JobDetailCard name="สถานที่สอน" content={job?.location} />
           <JobDetailCard
+            name="สอนเป็นภาษา"
+            content={job?.learn_language ?? "ไทย"}
+          />
+          <JobDetailCard
             name="จำนวนผู้เรียน"
             content={`${job?.learner_number} คน`}
           />

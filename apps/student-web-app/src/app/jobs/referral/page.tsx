@@ -20,6 +20,7 @@ import {
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { LanguageIcon } from "@heroicons/react/24/outline";
 
 export default function JobListingPage() {
   const urlSearchParams = useSearchParams();
@@ -233,6 +234,16 @@ function JobCard({ job }) {
                 <p className="font-medium">ตารางเรียน</p>
                 <p className="text-muted-foreground">
                   {job.available_date_time}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <LanguageIcon className="h-5 w-5 text-[#F8D2DA]" />
+              <div>
+                <p className="font-medium">สอนเป็นภาษา</p>
+                <p className="text-muted-foreground">
+                  {job.learn_language ?? "ไทย"}
                 </p>
               </div>
             </div>
