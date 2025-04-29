@@ -23,6 +23,7 @@ import _ from "lodash";
 import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { Images, User } from "lucide-react";
 
 export default function ReservationListPage() {
   const router = useRouter();
@@ -48,7 +49,6 @@ export default function ReservationListPage() {
   } = useQuery({
     queryKey: ["reservation list", jobId, code],
     queryFn: async () => {
-      console.log("kbd run");
       const resp = await reservationController.GetReservationList(
         parseInt(jobId || "0"),
         code || ""
@@ -72,8 +72,12 @@ export default function ReservationListPage() {
       const croppedImages = await Promise.all(
         resp.reservations.map(async (reservation) => {
           const cropSettings =
-            reservation.tutorDetail.profilePic.cropSettings.croppedAreaPixels;
-          const imageSrc = reservation.tutorDetail.profilePic.url;
+            reservation?.tutorDetail?.profilePic?.cropSettings
+              ?.croppedAreaPixels;
+          const imageSrc = reservation?.tutorDetail?.profilePic.url;
+          if (!imageSrc || !cropSettings) {
+            return null;
+          }
           return getCroppedImg(imageSrc, cropSettings);
         })
       );
@@ -104,7 +108,11 @@ export default function ReservationListPage() {
         // make avatar larger
         return (
           <div>
-            <Avatar size={100} src={croppedImages[index]} />
+            <Avatar
+              size={100}
+              src={croppedImages[index]}
+              icon={<User size={50} />}
+            />
           </div>
         );
       },
@@ -372,6 +380,8 @@ export default function ReservationListPage() {
     };
     return copiedColumns.slice(0, copiedColumns.length - 2);
   };
+
+  console.log("kbd data", data);
 
   return (
     <div className="p-4">
