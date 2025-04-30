@@ -373,6 +373,9 @@ export default function ReservationListPage() {
     copiedColumns[0] = {
       title: "ติวเตอร์",
       render: (_, record, index) => {
+        if (record.status === ReservationStatus.COMPLETED) {
+          return "ติวเตอร์ที่สอนงานนี้";
+        }
         return record.id === mainTutor ? "ติวเตอร์หลัก" : "ติวเตอร์สำรอง";
       },
       width: 70,
@@ -467,11 +470,25 @@ export default function ReservationListPage() {
         </div>
       )}
       {data.job?.status === "completed" && (
-        <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold mb-2">
-            งานรหัส: {jobId} เสร็จสิ้นแล้ว
-          </h1>
-        </div>
+        <>
+          <div className="flex justify-between items-center">
+            <h1 className="text-2xl font-bold mb-2">
+              งานรหัส: {jobId} เสร็จสิ้นแล้ว
+            </h1>
+          </div>
+
+          <Table<TutorReservation>
+            className={styles.customTable}
+            loading={isLoading}
+            pagination={{ pageSize: 10 }}
+            columns={getColumnsForSelectedTutor()}
+            dataSource={data.reservations}
+            scroll={{ x: "max-content", y: "calc(100vh-200px)" }}
+            rowClassName={(record) => {
+              return "border-2 border-blue-500";
+            }}
+          />
+        </>
       )}
       {showConfirmationModal && (
         <Modal
