@@ -193,25 +193,32 @@ export function UploadFormMulti({
                   } else {
                     return (
                       <div key={index} className="relative">
-                        {!readOnly && (
-                          <button
-                            onClick={() => {
-                              if (isExistingFile) {
-                                handleDeleteExisting(index);
-                              } else {
-                                handleDeleteNew(newFileIndex);
-                              }
-                            }}
-                            className="absolute top-0 right-3 text-red-500 rounded-full w-5 h-5 flex items-center justify-center transform translate-x-1/2 -translate-y-1/2 z-10"
-                            type="button"
-                          >
-                            <XCircle size={16} />
-                          </button>
-                        )}
-                        <div className="mb-1">
-                          <FilePdfOutlined style={{ fontSize: 50 }} />
+                        <div
+                          key={index}
+                          className="flex flex-col items-center relative"
+                        >
+                          {!readOnly && (
+                            <button
+                              onClick={() => {
+                                if (isExistingFile) {
+                                  handleDeleteExisting(index);
+                                } else {
+                                  handleDeleteNew(newFileIndex);
+                                }
+                              }}
+                              className="absolute top-0 right-3 text-red-500 rounded-full w-5 h-5 flex items-center justify-center transform translate-x-1/2 -translate-y-1/2 z-10"
+                              type="button"
+                            >
+                              <XCircle size={16} />
+                            </button>
+                          )}
+                          <div className="mb-1">
+                            <FilePdfOutlined style={{ fontSize: 50 }} />
+                          </div>
+                          <p className="text-sm mt-2 text-center break-words max-w-[96px]">
+                            {file.name}
+                          </p>
                         </div>
-                        <div className="mb-1">{file.name}</div>
                         {readOnly && (
                           <div>
                             <Button

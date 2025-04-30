@@ -3,8 +3,8 @@
 import { Trash2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Field } from "./form/form-item";
-import SelectField from "./form/select";
+import { Field } from "@/chulatutordream/components/shared/form-item";
+import SelectField from "@/chulatutordream/components/shared/select";
 
 interface EducationHistoryProps {
   form: any;
