@@ -1,11 +1,14 @@
 import { Form } from "@/components/ui/form";
-import { Field } from "@/components/form/form-item";
-import SelectField from "@/components/form/select";
+import { Field } from "@/chulatutordream/components/shared/form-item";
+import SelectField from "@/chulatutordream/components/shared/select";
 import { Input } from "@/components/ui/input";
-import { LabelComponent, RequiredLabel } from "@/components/form/label";
+import {
+  LabelComponent,
+  RequiredLabel,
+} from "@/chulatutordream/components/shared/label";
 import { Label } from "../ui/label";
-import { DatePickerComponent } from "@/components/form/date-picker";
-import { TooltipComponent } from "@/components/form/tooltip";
+import { DatePickerComponent } from "@/chulatutordream/components/shared/date-picker";
+import { TooltipComponent } from "@/chulatutordream/components/shared/tooltip";
 import { Textarea } from "../ui/textarea";
 import { EducationHistory } from "@/components/education-history";
 import { Button } from "../ui/button";
@@ -19,11 +22,10 @@ import {
   useSharedConstants,
 } from "../hooks/constant-context";
 import { useFieldArray } from "react-hook-form";
-import { Skeleton, Image, Alert } from "antd";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { CheckCircle, Download } from "lucide-react";
-import { FilePdfOutlined } from "@ant-design/icons";
-import ReadOnlyFormItem from "@/components/form/read-only-item";
+import { Skeleton, Alert } from "antd";
+import { Dispatch, SetStateAction, useState } from "react";
+import { CheckCircle } from "lucide-react";
+import ReadOnlyFormItem from "@/chulatutordream/components/shared/read-only-item";
 import { getLatestComment } from "../hooks/login-context";
 import { adminController } from "@/services/controller";
 import toast from "react-hot-toast";
@@ -31,7 +33,7 @@ import { UploadFormSingle } from "@/chulatutordream/components/shared/upload_for
 import { UploadFormMulti } from "@/chulatutordream/components/shared/upload_form_multi";
 import { motion } from "framer-motion";
 import { AddressComponent } from "../form/address";
-import ProfilePictureUploader from "../form/profile_pic";
+import ProfilePictureUploader from "@/chulatutordream/components/shared/profile_pic";
 
 type TutorProfileFormProps = {
   form: any;

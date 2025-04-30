@@ -2,7 +2,7 @@
 
 import { theme } from "antd";
 import { Input } from "../ui/input";
-import { Field } from "./form-item";
+import { Field } from "@/chulatutordream/components/shared/form-item";
 
 type AddressComponentProps = {
   form: any;
