@@ -523,7 +523,14 @@ function JobCreationForm() {
                           ...field,
                           onChange: (value: any) => {
                             onChange(value);
-                            if (value === "ประถม") {
+                            form.setValue("level2", null);
+                            if (value === "อนุบาล") {
+                              setLevel2Options([
+                                { label: "อนุบาล 1", value: 1 },
+                                { label: "อนุบาล 2", value: 2 },
+                                { label: "อนุบาล 3", value: 3 },
+                              ]);
+                            } else if (value === "ประถม") {
                               setLevel2Options([
                                 { label: "ป.1", value: 1 },
                                 { label: "ป.2", value: 2 },
@@ -544,10 +551,18 @@ function JobCreationForm() {
                                 { label: "ม.5", value: 5 },
                                 { label: "ม.6", value: 6 },
                               ]);
+                            } else if (value === "มหาลัย") {
+                              setLevel2Options([
+                                { label: "ปี 1", value: 1 },
+                                { label: "ปี 2", value: 2 },
+                                { label: "ปี 3", value: 3 },
+                                { label: "ปี 4", value: 4 },
+                                { label: "ปี 5", value: 5 },
+                                { label: "ปี 6", value: 6 },
+                              ]);
                             } else {
                               setLevel2Options([]);
                             }
-                            onChange(value);
                           },
                         }}
                         options={[
@@ -600,7 +615,14 @@ function JobCreationForm() {
                           ...field,
                           onChange: (value: any) => {
                             onChange(value);
-                            if (value === "ประถม") {
+                            form.setValue("want_to_learn_level2", null);
+                            if (value === "อนุบาล") {
+                              setWantToLearnLevel2Options([
+                                { label: "อนุบาล 1", value: 1 },
+                                { label: "อนุบาล 2", value: 2 },
+                                { label: "อนุบาล 3", value: 3 },
+                              ]);
+                            } else if (value === "ประถม") {
                               setWantToLearnLevel2Options([
                                 { label: "ป.1", value: 1 },
                                 { label: "ป.2", value: 2 },
@@ -621,10 +643,18 @@ function JobCreationForm() {
                                 { label: "ม.5", value: 5 },
                                 { label: "ม.6", value: 6 },
                               ]);
+                            } else if (value === "มหาลัย") {
+                              setLevel2Options([
+                                { label: "ปี 1", value: 1 },
+                                { label: "ปี 2", value: 2 },
+                                { label: "ปี 3", value: 3 },
+                                { label: "ปี 4", value: 4 },
+                                { label: "ปี 5", value: 5 },
+                                { label: "ปี 6", value: 6 },
+                              ]);
                             } else {
                               setWantToLearnLevel2Options([]);
                             }
-                            onChange(value);
                           },
                         }}
                         options={[
