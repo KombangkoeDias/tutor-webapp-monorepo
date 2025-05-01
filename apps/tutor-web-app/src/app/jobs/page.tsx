@@ -349,15 +349,15 @@ export default function JobsPage({
         open={showSuccessModal}
         onClose={() => {
           setShowSuccessModal(false);
-          window.location.reload();
+          router.push("/jobs");
         }}
         onOk={() => {
           setShowSuccessModal(false);
-          window.location.reload();
+          router.push("/jobs");
         }}
         onCancel={() => {
           setShowSuccessModal(false);
-          window.location.reload();
+          router.push("/jobs");
         }}
         className="success-modal"
       >

@@ -526,9 +526,9 @@ function JobCreationForm() {
                             form.setValue("level2", null);
                             if (value === "อนุบาล") {
                               setLevel2Options([
-                                { label: "อนุบาล 1", value: 1 },
-                                { label: "อนุบาล 2", value: 2 },
-                                { label: "อนุบาล 3", value: 3 },
+                                { label: "อ.1", value: 1 },
+                                { label: "อ.2", value: 2 },
+                                { label: "อ.3", value: 3 },
                               ]);
                             } else if (value === "ประถม") {
                               setLevel2Options([
@@ -618,9 +618,9 @@ function JobCreationForm() {
                             form.setValue("want_to_learn_level2", null);
                             if (value === "อนุบาล") {
                               setWantToLearnLevel2Options([
-                                { label: "อนุบาล 1", value: 1 },
-                                { label: "อนุบาล 2", value: 2 },
-                                { label: "อนุบาล 3", value: 3 },
+                                { label: "อ.1", value: 1 },
+                                { label: "อ.2", value: 2 },
+                                { label: "อ.3", value: 3 },
                               ]);
                             } else if (value === "ประถม") {
                               setWantToLearnLevel2Options([
@@ -644,7 +644,7 @@ function JobCreationForm() {
                                 { label: "ม.6", value: 6 },
                               ]);
                             } else if (value === "มหาลัย") {
-                              setLevel2Options([
+                              setWantToLearnLevel2Options([
                                 { label: "ปี 1", value: 1 },
                                 { label: "ปี 2", value: 2 },
                                 { label: "ปี 3", value: 3 },
