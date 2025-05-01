@@ -424,6 +424,7 @@ export default function JobHistoryTable({
         subjects={subjects}
         readOnly={true}
         refetch={refetchReservationHistory}
+        setShowSuccessModal={() => {}}
       />
     </div>
   );
@@ -451,7 +452,6 @@ function PaymentModal({
     },
   });
 
-  // poll payment status
   useEffect(() => {
     if (isModalOpen) {
       setIsCreatingQRCode(true);
@@ -621,9 +621,6 @@ function PaymentModal({
               <div className="mt-4 w-[100%]">
                 <UploadFormSingle
                   form={form}
-                  fileFormPath="receipt"
-                  fileUrlPath="undefined"
-                  originalName=""
                   readOnly={false}
                   name="receipt"
                   // label="อัพโหลด slip การโอนเงิน"
