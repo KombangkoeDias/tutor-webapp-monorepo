@@ -29,11 +29,6 @@ import {
   Phone,
   MessageSquare,
 } from "lucide-react";
-import {
-  GoogleReCaptchaProvider,
-  useGoogleReCaptcha,
-} from "react-google-recaptcha-v3";
-
 const errMsg = {
   name: "กรุณากรอกชื่อของท่าน",
   surname: "กรุณากรอกนามสกุลของท่าน",
