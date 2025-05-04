@@ -29,6 +29,7 @@ import {
   Phone,
   MessageSquare,
 } from "lucide-react";
+import toast from "react-hot-toast";
 import {
   GoogleReCaptchaProvider,
   useGoogleReCaptcha,
@@ -243,8 +244,50 @@ function JobCreationForm() {
 
   const { subjects, tags, isLoadingTags } = useSharedConstants();
 
+  // additional validation
+  const additionalValidation = (values) => {
+    const needsLevel2 = ["อนุบาล", "ประถม", "มัธยมต้น", "มัธยมปลาย", "มหาลัย"];
+    let isValid = true;
+    if (form.getFieldState("level1").isTouched) {
+      if (needsLevel2.includes(values.level1 ?? "") && !values.level2) {
+        if (!form.getFieldState("level2").error) {
+          form.setError("level2", { message: "กรุณาเลือกชั้นเรียน" });
+        }
+        isValid = false;
+      } else if (form.getFieldState("level2").error) {
+        form.clearErrors("level2");
+      }
+    }
+
+    if (form.getFieldState("want_to_learn_level1").isTouched) {
+      if (
+        needsLevel2.includes(values.want_to_learn_level1 ?? "") &&
+        !values.want_to_learn_level2
+      ) {
+        if (!form.getFieldState("want_to_learn_level2").error) {
+          form.setError("want_to_learn_level2", {
+            message: "กรุณาเลือกชั้นที่ต้องการเรียน",
+          });
+        }
+        isValid = false;
+      } else if (form.getFieldState("want_to_learn_level2").error) {
+        form.clearErrors("want_to_learn_level2");
+      }
+    }
+
+    return isValid;
+  };
+
+  form.watch((values) => {
+    additionalValidation(values);
+  });
+
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof formSchema>, token: string) {
+  async function onSubmit(values: z.infer<typeof formSchema>, token?: string) {
+    if (!additionalValidation(values)) {
+      toast.error("กรุณาเลื่อนขึ้นไปและกรอกข้อมูลให้ครบถ้วน");
+      return;
+    }
     setIsLoading(true);
     let requestBody = _.cloneDeep(values);
     const numberFields = [
