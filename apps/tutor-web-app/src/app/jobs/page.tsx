@@ -32,6 +32,7 @@ import {
   useSharedConstants,
 } from "@/components/hooks/constant-context";
 import { CheckCircleOutlined, FullscreenOutlined } from "@ant-design/icons";
+import { useLoggedIn } from "@/components/hooks/login-context";
 
 export enum JobTableMode {
   CONCISE = "concise",
@@ -87,6 +88,7 @@ export default function JobsPage({
   const router = useRouter();
   const pathname = usePathname();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const { loggedIn } = useLoggedIn();
 
   var columns: TableColumnsType<DataType> = [
     {
@@ -251,9 +253,11 @@ export default function JobsPage({
             <div className="grid grid-cols-2 mb-4">
               <CardTitle className="text-xl font-semibold">
                 งานสอนทั้งหมด
-                <CardDescription>
-                  *แสดงเฉพาะงานที่ยังไม่ได้จองเท่านั้น
-                </CardDescription>
+                {loggedIn && (
+                  <CardDescription>
+                    *แสดงเฉพาะงานที่ยังไม่ได้จองเท่านั้น
+                  </CardDescription>
+                )}
               </CardTitle>
               {pathname === "/" && (
                 <div className="flex justify-end">
