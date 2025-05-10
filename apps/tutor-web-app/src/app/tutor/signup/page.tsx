@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { tutorController } from "@/services/controller/tutor";
 
 import _ from "lodash";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useLoggedIn } from "@/components/hooks/login-context";
 import { useEffect, useState } from "react";
 import TutorProfileForm, {
@@ -22,6 +22,10 @@ export default function TutorRegistrationForm() {
   const { loggedIn } = useLoggedIn();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const urlSearchParams = useSearchParams();
+
+  const code = urlSearchParams.get("utm_ref") ?? undefined;
 
   useEffect(() => {
     if (loggedIn) {
@@ -81,7 +85,7 @@ export default function TutorRegistrationForm() {
       tutorController.getToastConfig("กำลังอัพโหลดไฟล์ทั้งหมด")
     );
     const signUpRequestBody = convertFormDataToBackend(requestValues);
-    console.log("kbd signUpRequestBody", signUpRequestBody);
+    signUpRequestBody.referral_code = code;
     await tutorController.SignUp(signUpRequestBody).finally(() => {
       setIsSubmitting(false);
     });
