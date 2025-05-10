@@ -67,7 +67,10 @@ export default function ProfilePictureUploader({
   useEffect(() => {
     if (!!defaultOriginalImage) {
       setIsLoading(true);
-      getCroppedImg(defaultOriginalImage, croppedAreaPixels).then((img) => {
+      getCroppedImg(
+        defaultOriginalImage,
+        defaultCropSettings?.croppedAreaPixels
+      ).then((img) => {
         setCroppedImage(img);
         setIsLoading(false);
       });
