@@ -22,11 +22,11 @@ export default function ReadOnlyFormItem({
       }}
     >
       <p>
-        {value
+        {(value
           ? value
           : typeof form.getValues(name) == "object"
-          ? form.getValues(name)?.label
-          : form.getValues(name)}
+            ? form.getValues(name)?.label
+            : form.getValues(name)) ?? "-"}
       </p>
     </div>
   );
