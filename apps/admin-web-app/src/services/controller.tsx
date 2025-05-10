@@ -133,8 +133,8 @@ class AdminController extends BaseController {
     return this.handleResponse(resp);
   }
 
-  protected async AddCode(name: string) {
-    const resp = await POST(ENDPOINTS.REFERRAL_CODES, { name });
+  protected async AddCode(name: string, tutor_id?: number) {
+    const resp = await POST(ENDPOINTS.REFERRAL_CODES, { name, tutor_id });
     return this.handleResponse(resp);
   }
 
@@ -276,9 +276,9 @@ class AdminControllerToaster extends AdminController {
     );
   }
 
-  async AddCode(name: string) {
+  async AddCode(name: string, tutor_id?: number) {
     return toast.promise(
-      super.AddCode(name),
+      super.AddCode(name, tutor_id),
       this.getToastConfig("กำลังเพิ่ม referral code")
     );
   }
