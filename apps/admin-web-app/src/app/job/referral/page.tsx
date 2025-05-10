@@ -70,7 +70,7 @@ export default function () {
   };
 
   const handleSignUpLink = async (code: string) => {
-    const baseLink = "https://jobtutordream.com"; // Replace with your actual URL
+    const baseLink = "https://test.jobtutordream.com"; // Replace with your actual URL
     const link = `${baseLink}/tutor/signup?utm_ref=${code}`;
     await copyToClipboard(link);
   };
