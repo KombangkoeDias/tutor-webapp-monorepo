@@ -28,7 +28,7 @@ import { z } from "zod";
 
 export default function TutorProfile() {
   useAuthRedirect();
-  const { loggedIn, isLoading } = useLoggedIn();
+  const { loggedIn, reAuthenticate } = useLoggedIn();
   const [readOnly, setReadOnly] = useState(true);
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -139,6 +139,7 @@ export default function TutorProfile() {
     setReadOnly(true);
     setPendingProfileReadOnly(true);
     refetch();
+    reAuthenticate();
     scrollToTop();
   };
 
