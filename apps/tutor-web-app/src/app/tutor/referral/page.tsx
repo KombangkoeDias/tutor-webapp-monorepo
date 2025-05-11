@@ -56,7 +56,7 @@ const ReferralPage = () => {
   return (
     <>
       <div className="mb-8 flex justify-center border-b">
-        <div className="flex ">
+        <div className="flex space-x-4 px-4">
           {tabs.map((tab, index) => (
             <button
               key={index}
