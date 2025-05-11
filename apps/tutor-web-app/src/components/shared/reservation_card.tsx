@@ -144,17 +144,6 @@ export default function JobCard({ reservation }) {
                 </p>
               </div>
             </div>
-
-            <div>
-              <p className="font-medium mb-1">แท็ก</p>
-              <div className="flex flex-wrap gap-2">
-                {job.tags.map((tag) => (
-                  <Badge key={tag.id} variant="secondary">
-                    {tag.name}
-                  </Badge>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
       </CardContent>
