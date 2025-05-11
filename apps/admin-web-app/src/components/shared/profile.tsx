@@ -320,7 +320,7 @@ export default function TutorProfileForm({
                     <UploadFormSingle
                       form={form}
                       readOnly={readOnly}
-                      description="กรุณาแนบบัตรประชาชน กรุณาขีดคร่อมภาพบัตร และเขียนว่า '#ใช้เพื่อสมัครติวเตอร์กับ Chula Tutor Dream เท่านั้น#'"
+                      description="กรุณาแนบบัตรประชาชน กรุณาขีดคร่อมภาพบัตร และเขียนว่า '#ใช้เพื่อสมัครติวเตอร์กับ Job Tutor Dream เท่านั้น#'"
                       name="id_card_img_file"
                       existingFileNamePath="id_card_img_original"
                       existingFileUrlPath="id_card_img"
