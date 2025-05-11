@@ -12,7 +12,7 @@ import { Separator } from "@/components/ui/separator";
 import { Spin, Tag } from "antd";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CopyButton } from "../copy-button";
-import { handleSignUpLink } from "@/lib/utils";
+import { handleSignUpLink } from "../../../lib/utils";
 
 export default function TutorReferral({
   code,
@@ -41,7 +41,10 @@ export default function TutorReferral({
         <CopyButton
           className="mt-2"
           text="copy referral link"
-          copyFunc={() => handleSignUpLink(code)}
+          copyFunc={() => {
+            console.log("run");
+            return handleSignUpLink(code);
+          }}
           color={color}
         />
       </header>
@@ -283,7 +286,6 @@ function TutorWithReservationCard({ tutor, color }) {
                 </p>
               </div>
             </div>
-            คุณจะได้รับค่า referral
           </div>
         </div>
       </CardContent>
