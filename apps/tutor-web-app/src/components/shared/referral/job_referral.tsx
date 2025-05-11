@@ -243,17 +243,6 @@ function JobCard({ job, color }) {
                 </p>
               </div>
             </div>
-
-            <div>
-              <p className="font-medium mb-1">แท็ก</p>
-              <div className="flex flex-wrap gap-2">
-                {job.tags.map((tag) => (
-                  <Tag key={tag.id} style={normalTagStyle}>
-                    {tag.name}
-                  </Tag>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
       </CardContent>
