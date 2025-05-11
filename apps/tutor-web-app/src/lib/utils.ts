@@ -41,19 +41,19 @@ export const copyToClipboard = async (link: string) => {
 };
 
 export const handleGenerateLink = async (code: string) => {
-  const baseLink = "https://chulatutordream.com"; // Replace with your actual URL
+  const baseLink = "https://test.chulatutordream.com"; // Replace with your actual URL
   const link = `${baseLink}/jobs/create?utm_ref=${code}`;
   await copyToClipboard(link);
 };
 
 export const handleSignUpLink = async (code: string) => {
-  const baseLink = "https://jobtutordream.com"; // Replace with your actual URL
+  const baseLink = "https://test.jobtutordream.com"; // Replace with your actual URL
   const link = `${baseLink}/tutor/signup?utm_ref=${code}`;
   await copyToClipboard(link);
 };
 
 export const handleListReferredJobsLink = async (code: string) => {
-  const baseLink = "https://chulatutordream.com"; // Replace with your actual URL
+  const baseLink = "https://test.chulatutordream.com"; // Replace with your actual URL
   const link = `${baseLink}/jobs/referral?utm_ref=${code}`;
   await copyToClipboard(link);
 };
