@@ -9,6 +9,12 @@ import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { Spin } from "antd";
 import SelectField from "@/chulatutordream/components/shared/select";
+import {
+  handleGenerateLink,
+  handleListReferredJobsLink,
+  handleListReferredJobsLinkForTutor,
+  handleSignUpLink,
+} from "@/chulatutordream/lib/utils";
 
 enum CreateCodeOptions {
   TUTOR = "ติวเตอร์ที่สมัครกับเรา",
@@ -61,39 +67,6 @@ export default function () {
   const handleAddCode = async () => {
     await adminController.AddCode(name, tutor?.value);
     refetch();
-  };
-
-  const handleGenerateLink = async (code: string) => {
-    const baseLink = "https://chulatutordream.com"; // Replace with your actual URL
-    const link = `${baseLink}/jobs/create?utm_ref=${code}`;
-    await copyToClipboard(link);
-  };
-
-  const handleSignUpLink = async (code: string) => {
-    const baseLink = "https://jobtutordream.com"; // Replace with your actual URL
-    const link = `${baseLink}/tutor/signup?utm_ref=${code}`;
-    await copyToClipboard(link);
-  };
-
-  const handleListReferredJobsLink = async (code: string) => {
-    const baseLink = "https://chulatutordream.com"; // Replace with your actual URL
-    const link = `${baseLink}/jobs/referral?utm_ref=${code}`;
-    await copyToClipboard(link);
-  };
-
-  const handleListReferredJobsLinkForTutor = async (code: string) => {
-    // const baseLink = "https://test.chulatutordream.com"; // Replace with your actual URL
-    // const link = `${baseLink}/tutor/jobs/referral?utm_ref=${code}`;
-    // await copyToClipboard(link);
-  };
-
-  const copyToClipboard = async (link: string) => {
-    try {
-      await navigator.clipboard.writeText(link);
-      toast.success("Link copied to clipboard!");
-    } catch (err) {
-      toast.error(`Failed to copy link: ${err}`);
-    }
   };
 
   return (
