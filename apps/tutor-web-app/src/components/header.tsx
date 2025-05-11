@@ -23,6 +23,7 @@ import {
 import { useLoggedIn } from "./hooks/login-context";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import ProfilePictureUploader from "./shared/profile_pic";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -166,10 +167,15 @@ export default function Header() {
                         <span className="sr-only">Open user menu</span>
                         <div className="relative">
                           <div className="absolute -inset-0.5 rounded-full bg-pink-400/50 opacity-75 blur-sm animate-pulse"></div>
-                          <img
-                            alt=""
-                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                            className="size-8 rounded-full relative border-2 border-gray-700"
+                          <ProfilePictureUploader
+                            onSave={() => {}}
+                            readOnly={true}
+                            profilePage={false}
+                            defaultOriginalImage={tutor?.profile_pic_original}
+                            defaultCropSettings={JSON.parse(
+                              tutor?.profile_pic_crop_setting ?? "{}"
+                            )}
+                            size="ss"
                           />
                         </div>
                       </MenuButton>
