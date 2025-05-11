@@ -34,7 +34,7 @@ interface ProfilePictureUploaderProps {
   defaultOriginalImage?: string; // S3 URL to original image
   defaultCropSettings?: CropSettings; // Saved crop settings
 
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: "ss" | "sm" | "md" | "lg" | "xl";
   readOnly: boolean;
   profilePage: boolean;
 }
@@ -79,6 +79,7 @@ export default function ProfilePictureUploader({
 
   // Size mapping for avatar
   const sizeMap = {
+    ss: "h-12 w-12",
     sm: "h-16 w-16",
     md: "h-24 w-24",
     lg: "h-32 w-32",
