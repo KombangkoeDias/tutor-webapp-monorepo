@@ -1,4 +1,5 @@
 import { clsx, type ClassValue } from "clsx";
+import toast from "react-hot-toast";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -28,4 +29,37 @@ export const removeSearchParam = (searchParams: any, name: string) => {
   const params = new URLSearchParams(searchParams.toString());
   params.delete(name);
   return params.toString();
+};
+
+export const copyToClipboard = async (link: string) => {
+  try {
+    await navigator.clipboard.writeText(link);
+    toast.success("Link copied to clipboard!");
+  } catch (err) {
+    toast.error(`Failed to copy link: ${err}`);
+  }
+};
+
+export const handleGenerateLink = async (code: string) => {
+  const baseLink = "https://chulatutordream.com"; // Replace with your actual URL
+  const link = `${baseLink}/jobs/create?utm_ref=${code}`;
+  await copyToClipboard(link);
+};
+
+export const handleSignUpLink = async (code: string) => {
+  const baseLink = "https://jobtutordream.com"; // Replace with your actual URL
+  const link = `${baseLink}/tutor/signup?utm_ref=${code}`;
+  await copyToClipboard(link);
+};
+
+export const handleListReferredJobsLink = async (code: string) => {
+  const baseLink = "https://chulatutordream.com"; // Replace with your actual URL
+  const link = `${baseLink}/jobs/referral?utm_ref=${code}`;
+  await copyToClipboard(link);
+};
+
+export const handleListReferredJobsLinkForTutor = async (code: string) => {
+  // const baseLink = "https://test.chulatutordream.com"; // Replace with your actual URL
+  // const link = `${baseLink}/tutor/jobs/referral?utm_ref=${code}`;
+  // await copyToClipboard(link);
 };

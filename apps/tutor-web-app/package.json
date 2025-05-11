@@ -7,5 +7,8 @@
     "build": "next build --no-lint",
     "start": "next start",
     "lint": "next lint"
+  },
+  "dependencies": {
+    "@radix-ui/react-tabs": "^1.1.11"
   }
 }

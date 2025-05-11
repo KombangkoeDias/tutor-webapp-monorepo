@@ -62,6 +62,8 @@ export const ENDPOINTS = {
   APPROVE_RESERVATION_ENDPOINT: "/reservation/approve",
   CREATE_JOB_ENDPOINT: "/job/create",
   GET_JOB_REFERRAL: "/job/search_by_referral",
+  REFERRAL: "/tutor/referral",
+  LIST_BY_REFERRAL: "/tutor/list_by_referral",
 };
 
 export const toastCaption = {
