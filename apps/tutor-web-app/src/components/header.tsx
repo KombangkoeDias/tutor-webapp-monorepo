@@ -41,6 +41,7 @@ const LoggedInNavigation = [
   { name: "ประวัติการจองงาน", href: "/reservation/history" },
   { name: "ขั้นตอนการรับงาน", href: "/jobs/steps" },
   { name: "ติดต่อทีมงาน", href: "/contact_us" },
+  { name: "ชวนเพื่อน/นักเรียนมาสมัครกับเรา", href: "/tutor/referral" },
 ];
 
 export default function Header() {

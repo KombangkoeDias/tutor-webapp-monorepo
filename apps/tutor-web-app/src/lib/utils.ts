@@ -57,9 +57,3 @@ export const handleListReferredJobsLink = async (code: string) => {
   const link = `${baseLink}/jobs/referral?utm_ref=${code}`;
   await copyToClipboard(link);
 };
-
-export const handleListReferredJobsLinkForTutor = async (code: string) => {
-  // const baseLink = "https://test.chulatutordream.com"; // Replace with your actual URL
-  // const link = `${baseLink}/tutor/jobs/referral?utm_ref=${code}`;
-  // await copyToClipboard(link);
-};

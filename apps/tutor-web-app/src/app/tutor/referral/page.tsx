@@ -9,6 +9,7 @@ import { Spin } from "antd";
 
 import React, { useEffect, useState } from "react";
 import TutorReferral from "@/components/shared/referral/tutor_referral";
+import { useAuthRedirect } from "@/components/hooks/use-auth-redirect";
 
 const tabs = [
   {
@@ -20,6 +21,7 @@ const tabs = [
 ];
 
 const ReferralPage = () => {
+  useAuthRedirect();
   const {
     data: referral,
     isFetching: isFetchingReferral,
@@ -52,9 +54,9 @@ const ReferralPage = () => {
   }
 
   return (
-    <div className="w-full">
+    <>
       <div className="mb-8 flex justify-center border-b">
-        <div className="flex space-x-4 px-4">
+        <div className="flex ">
           {tabs.map((tab, index) => (
             <button
               key={index}
@@ -80,11 +82,11 @@ const ReferralPage = () => {
           ))}
         </div>
       </div>
-      <div className="mt-4">
+      <div className="mt-4 flex justify-center mr-5">
         {activeTab == 0 && <TutorListingPage code={referral?.code} />}
         {activeTab == 1 && <JobListingPage code={referral?.code} />}
       </div>
-    </div>
+    </>
   );
 };
 
@@ -119,7 +121,7 @@ const TutorListingPage = ({ code }) => {
     data: { referrer, ...data },
     isFetching,
   } = useQuery({
-    queryKey: ["getAllJobReferral"],
+    queryKey: ["getAllTutorReferral"],
     queryFn: async () => {
       if (code) {
         return await tutorController.listByReferral(code);
