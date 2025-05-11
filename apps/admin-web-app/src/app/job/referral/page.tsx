@@ -12,7 +12,6 @@ import SelectField from "@/chulatutordream/components/shared/select";
 import {
   handleGenerateLink,
   handleListReferredJobsLink,
-  handleListReferredJobsLinkForTutor,
   handleSignUpLink,
 } from "@/chulatutordream/lib/utils";
 
@@ -27,7 +26,9 @@ export default function () {
     { label: string; value: number } | undefined
   >(undefined);
 
-  const [mode, setMode] = useState<CreateCodeOptions>(CreateCodeOptions.TUTOR);
+  const [mode, setMode] = useState<CreateCodeOptions>(
+    CreateCodeOptions.NOT_TUTOR
+  );
 
   const {
     data: codes,
@@ -168,24 +169,12 @@ export default function () {
                 >
                   Copy Link สมัครติวเตอร์
                 </Button>
-                {!item.tutor_id && (
-                  <Button
-                    size="sm"
-                    onClick={() => handleListReferredJobsLink(item.code)}
-                  >
-                    Copy Link ลิสต์งาน/การจองงาน
-                  </Button>
-                )}
-                {item.tutor_id && (
-                  <Button
-                    size="sm"
-                    onClick={() =>
-                      handleListReferredJobsLinkForTutor(item.code)
-                    }
-                  >
-                    Copy Link ลิสต์งาน/การจองงาน
-                  </Button>
-                )}
+                <Button
+                  size="sm"
+                  onClick={() => handleListReferredJobsLink(item.code)}
+                >
+                  Copy Link ลิสต์งาน/การจองงาน
+                </Button>
               </CardContent>
             </Card>
           ))}

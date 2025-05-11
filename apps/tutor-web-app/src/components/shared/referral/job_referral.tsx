@@ -1,5 +1,4 @@
 import { useSharedConstants } from "../../hooks/constant-context";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   CalendarIcon,
@@ -13,8 +12,8 @@ import {
 } from "lucide-react";
 import { LanguageIcon } from "@heroicons/react/24/outline";
 import { Separator } from "@/components/ui/separator";
-import { Spin } from "antd";
-import { copyToClipboard, handleGenerateLink } from "../../../lib/utils";
+import { Spin, Tag } from "antd";
+import { handleGenerateLink } from "../../../lib/utils";
 import { CopyButton } from "../copy-button";
 
 export default function JobReferral({
@@ -25,7 +24,7 @@ export default function JobReferral({
   color,
 }) {
   return (
-    <div className="container mx-auto py-8 px-4">
+    <div className="container py-8 px-4">
       <header className="mb-8 text-center">
         <h1 className="text-3xl font-bold tracking-tight mb-2">
           งานทั้งหมดที่ refer โดยคุณ {referrer?.name}
@@ -42,6 +41,7 @@ export default function JobReferral({
           className="mt-2"
           text="copy referral link"
           copyFunc={() => handleGenerateLink(code)}
+          color={color}
         />
       </header>
 
@@ -71,6 +71,8 @@ export default function JobReferral({
 }
 
 function StatusLegend() {
+  const tagStyle = { fontSize: "14px", padding: "6px 10px" };
+
   return (
     <div className="bg-white rounded-lg shadow-sm p-4 border">
       <div className="flex items-center gap-2 mb-2">
@@ -79,33 +81,33 @@ function StatusLegend() {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
         <div className="flex items-center gap-2">
-          <Badge className="bg-[#F8D2DA] text-gray-800" variant="outline">
+          <Tag color="pink" style={tagStyle}>
             created
-          </Badge>
+          </Tag>
           <span className="text-sm text-muted-foreground">
             งานได้ถูกสร้างขึ้นแล้ว กำลังรอติวเตอร์มาสมัคร
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <Badge className="bg-green-100 text-green-800" variant="outline">
+          <Tag color="green" style={tagStyle}>
             approved
-          </Badge>
+          </Tag>
           <span className="text-sm text-muted-foreground">
             นักเรียนได้เลือกติวเตอร์แล้ว กำลังรอติวเตอร์ยืนยัน
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <Badge className="bg-red-100 text-red-800" variant="outline">
+          <Tag color="red" style={tagStyle}>
             cancelled
-          </Badge>
+          </Tag>
           <span className="text-sm text-muted-foreground">
             งานได้ถูกยกเลิกโดยนักเรียนหรือแอดมิน
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <Badge className="bg-purple-100 text-purple-800" variant="outline">
+          <Tag color="purple" style={tagStyle}>
             completed
-          </Badge>
+          </Tag>
           <span className="text-sm text-muted-foreground">
             ติวเตอร์ได้ยืนยันงานแล้ว งานเสร็จสมบูรณ์
           </span>
@@ -118,20 +120,21 @@ function StatusLegend() {
 function JobCard({ job, color }) {
   const { subjects } = useSharedConstants();
   const subjectName = subjects[job.subjectId] || `วิชารหัส ${job.subjectId}`;
-  // Map status to appropriate color
+  const largeTagStyle = { fontSize: "16px", padding: "8px 12px" };
+  const normalTagStyle = { fontSize: "14px", padding: "6px 10px" };
   // Map status to appropriate color
   const getStatusColor = (status) => {
     switch (status) {
       case "created":
-        return "bg-[#F8D2DA] text-gray-800";
+        return "pink";
       case "approved":
-        return "bg-green-100 text-green-800";
+        return "green";
       case "cancelled":
-        return "bg-red-100 text-red-800";
+        return "red";
       case "completed":
-        return "bg-purple-100 text-purple-800";
+        return "purple";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "default";
     }
   };
 
@@ -151,18 +154,12 @@ function JobCard({ job, color }) {
             </p>
           </div>
           <div>
-            <Badge
-              className="text-lg px-3 py-3 mr-2 bg-blue-100 text-black"
-              variant="outline"
-            >
+            <Tag color="blue" style={{ ...largeTagStyle, marginRight: "8px" }}>
               ค่า commission: {job?.referral_fee * 0.2} บาท
-            </Badge>
-            <Badge
-              className={`text-lg px-3 py-3 ${getStatusColor(job.status)}`}
-              variant="outline"
-            >
+            </Tag>
+            <Tag color={getStatusColor(job.status)} style={largeTagStyle}>
               {job.status}
-            </Badge>
+            </Tag>
           </div>
         </div>
       </CardHeader>
@@ -251,9 +248,9 @@ function JobCard({ job, color }) {
               <p className="font-medium mb-1">แท็ก</p>
               <div className="flex flex-wrap gap-2">
                 {job.tags.map((tag) => (
-                  <Badge key={tag.id} variant="secondary">
+                  <Tag key={tag.id} style={normalTagStyle}>
                     {tag.name}
-                  </Badge>
+                  </Tag>
                 ))}
               </div>
             </div>

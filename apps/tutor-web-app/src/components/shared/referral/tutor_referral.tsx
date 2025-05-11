@@ -1,5 +1,4 @@
 import { useSharedConstants } from "../../hooks/constant-context";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   GraduationCapIcon,
@@ -10,7 +9,7 @@ import {
   UserIcon,
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { Spin } from "antd";
+import { Spin, Tag } from "antd";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CopyButton } from "../copy-button";
 import { handleSignUpLink } from "@/lib/utils";
@@ -26,14 +25,14 @@ export default function TutorReferral({
   const tutorsWithoutReservation = data?.without_reservation || [];
 
   return (
-    <div className="container mx-auto py-8 px-4">
+    <div className="container py-8 px-4">
       <header className="mb-8 text-center">
         <h1 className="text-3xl font-bold tracking-tight mb-2">
           ติวเตอร์ทั้งหมดที่ refer โดยคุณ {referrer?.name}
         </h1>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          เมื่อติวเตอร์ที่คุณแนะนำได้รับงานและสอนเรียบร้อยแล้ว คุณจะได้รับค่า
-          referral 20% ของค่าแนะนำ
+          เมื่อติวเตอร์ที่คุณแนะนำได้รับงานเป็นครั้งแรกและสอนเรียบร้อยแล้ว
+          คุณจะได้รับค่า referral 20% ของค่าแนะนำ
         </p>
         <p className="max-w-2xl mx-auto mt-4">
           คลิกที่ปุ่มนี้เพื่อ คัดลอก ลิงก์ referral ของคุณ
@@ -43,6 +42,7 @@ export default function TutorReferral({
           className="mt-2"
           text="copy referral link"
           copyFunc={() => handleSignUpLink(code)}
+          color={color}
         />
       </header>
 
@@ -62,54 +62,56 @@ export default function TutorReferral({
         tutorsWithReservation.length === 0 &&
         tutorsWithoutReservation.length === 0 && (
           <div>
-            <p className="mx-auto text-center m-4">
+            <p className="mx-auto text-center mt-4">
               ยังไม่มีติวเตอร์ที่ refer โดยคุณ
             </p>
           </div>
         )}
 
-      {tutorsWithReservation.length >= 0 ||
-        (tutorsWithoutReservation.length >= 0 && (
-          <Tabs defaultValue="with-reservation" className="mt-6">
-            <TabsList className="grid w-full grid-cols-2 mb-6">
-              <TabsTrigger value="with-reservation">
-                ติวเตอร์ที่มีงาน ({tutorsWithReservation.length})
-              </TabsTrigger>
-              <TabsTrigger value="without-reservation">
-                ติวเตอร์ที่ยังไม่มีงาน ({tutorsWithoutReservation.length})
-              </TabsTrigger>
-            </TabsList>
+      {(tutorsWithReservation.length > 0 ||
+        tutorsWithoutReservation.length > 0) && (
+        <Tabs defaultValue="with-reservation" className="mt-4">
+          <TabsList className="grid w-full grid-cols-2 mb-6">
+            <TabsTrigger value="with-reservation">
+              ติวเตอร์ที่สมัครงานแล้ว ({tutorsWithReservation.length})
+            </TabsTrigger>
+            <TabsTrigger value="without-reservation">
+              ติวเตอร์ที่ยังไม่สมัครงาน ({tutorsWithoutReservation.length})
+            </TabsTrigger>
+          </TabsList>
 
-            <TabsContent value="with-reservation">
-              <div className="grid grid-cols-1 gap-6 mt-4">
-                {tutorsWithReservation.map((tutor) => (
-                  <TutorWithReservationCard
-                    key={`${tutor.tutor.id}-${tutor.job.id}`}
-                    tutor={tutor}
-                    color={color}
-                  />
-                ))}
-              </div>
-            </TabsContent>
+          <TabsContent value="with-reservation">
+            <div className="grid grid-cols-1 gap-6 mt-4">
+              {tutorsWithReservation.map((tutor) => (
+                <TutorWithReservationCard
+                  key={`${tutor.tutor.id}-${tutor.job.id}`}
+                  tutor={tutor}
+                  color={color}
+                />
+              ))}
+            </div>
+          </TabsContent>
 
-            <TabsContent value="without-reservation">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-                {tutorsWithoutReservation.map((tutor) => (
-                  <TutorWithoutReservationCard
-                    key={tutor.id}
-                    tutor={tutor}
-                    color={color}
-                  />
-                ))}
-              </div>
-            </TabsContent>
-          </Tabs>
-        ))}
+          <TabsContent value="without-reservation">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+              {tutorsWithoutReservation.map((tutor) => (
+                <TutorWithoutReservationCard
+                  key={tutor.id}
+                  tutor={tutor}
+                  color={color}
+                />
+              ))}
+            </div>
+          </TabsContent>
+        </Tabs>
+      )}
     </div>
   );
 }
 
 function StatusLegend() {
+  const tagStyle = { fontSize: "14px", padding: "6px 10px" };
+
   return (
     <div className="bg-white rounded-lg shadow-sm p-4 border">
       <div className="flex items-center gap-2 mb-2">
@@ -117,37 +119,65 @@ function StatusLegend() {
         <h3 className="font-medium">สถานะงาน</h3>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
-        <div className="flex items-center gap-2">
-          <Badge className="bg-[#F8D2DA] text-gray-800" variant="outline">
-            created
-          </Badge>
+        <div className="flex items-center gap-2 mt-4">
+          <Tag color="blue" style={tagStyle}>
+            reserved
+          </Tag>
           <span className="text-sm text-muted-foreground">
-            งานได้ถูกสร้างขึ้นแล้ว กำลังรอติวเตอร์มาสมัคร
+            ติวเตอร์ได้จองงานแล้ว รอการตอบรับจากนักเรียน
           </span>
         </div>
-        <div className="flex items-center gap-2">
-          <Badge className="bg-green-100 text-green-800" variant="outline">
+        <div className="flex items-center gap-2 mt-4">
+          <Tag color="green" style={tagStyle}>
             approved
-          </Badge>
+          </Tag>
           <span className="text-sm text-muted-foreground">
-            นักเรียนได้เลือกติวเตอร์แล้ว กำลังรอติวเตอร์ยืนยัน
+            นักเรียนได้อนุมัติติวเตอร์แล้ว
           </span>
         </div>
-        <div className="flex items-center gap-2">
-          <Badge className="bg-red-100 text-red-800" variant="outline">
+        <div className="flex items-center gap-2 mt-4">
+          <Tag color="gold" style={tagStyle}>
+            backup
+          </Tag>
+          <span className="text-sm text-muted-foreground">
+            ติวเตอร์อยู่ในรายชื่อสำรอง
+          </span>
+        </div>
+        <div className="flex items-center gap-2 mt-4">
+          <Tag color="red" style={tagStyle}>
+            rejected
+          </Tag>
+          <span className="text-sm text-muted-foreground">
+            นักเรียนปฏิเสธติวเตอร์
+          </span>
+        </div>
+        <div className="flex items-center gap-2 mt-4">
+          <Tag color="orange" style={tagStyle}>
+            pending-refund
+          </Tag>
+          <span className="text-sm text-muted-foreground">
+            อยู่ระหว่างการคืนเงิน
+          </span>
+        </div>
+        <div className="flex items-center gap-2 mt-4">
+          <Tag color="cyan" style={tagStyle}>
+            refunded
+          </Tag>
+          <span className="text-sm text-muted-foreground">
+            คืนเงินเรียบร้อยแล้ว
+          </span>
+        </div>
+        <div className="flex items-center gap-2 mt-4">
+          <Tag color="red" style={tagStyle}>
             cancelled
-          </Badge>
-          <span className="text-sm text-muted-foreground">
-            งานได้ถูกยกเลิกโดยนักเรียนหรือแอดมิน
-          </span>
+          </Tag>
+          <span className="text-sm text-muted-foreground">งานถูกยกเลิก</span>
         </div>
-        <div className="flex items-center gap-2">
-          <Badge className="bg-purple-100 text-purple-800" variant="outline">
+        <div className="flex items-center gap-2 mt-4">
+          <Tag color="purple" style={tagStyle}>
             completed
-          </Badge>
-          <span className="text-sm text-muted-foreground">
-            ติวเตอร์ได้ยืนยันงานแล้ว งานเสร็จสมบูรณ์
-          </span>
+          </Tag>
+          <span className="text-sm text-muted-foreground">งานเสร็จสมบูรณ์</span>
         </div>
       </div>
     </div>
@@ -159,19 +189,29 @@ function TutorWithReservationCard({ tutor, color }) {
   const subjectName =
     subjects[tutor.job.subject] || `วิชารหัส ${tutor.job.subject}`;
 
+  const textColor = color ? `text-[${color}]` : "text-[#F8D2DA]";
+
   // Map status to appropriate color
   const getStatusColor = (status) => {
     switch (status) {
-      case "created":
-        return "bg-[#F8D2DA] text-gray-800";
+      case "reserved":
+        return "blue";
       case "approved":
-        return "bg-green-100 text-green-800";
+        return "green";
+      case "backup":
+        return "gold";
+      case "rejected":
+        return "red";
+      case "pending-refund":
+        return "orange";
+      case "refunded":
+        return "cyan";
       case "cancelled":
-        return "bg-red-100 text-red-800";
+        return "red";
       case "completed":
-        return "bg-purple-100 text-purple-800";
+        return "purple";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "default";
     }
   };
 
@@ -184,25 +224,22 @@ function TutorWithReservationCard({ tutor, color }) {
         <div className="flex justify-between items-start flex-wrap gap-2">
           <div>
             <CardTitle className="text-xl font-bold">
-              ติวเตอร์: {tutor.tutor.name}
+              รหัสงาน: {tutor.job.description}
             </CardTitle>
             <p className="text-muted-foreground text-sm mt-1">
-              รหัสงาน: {tutor.job.description}
+              ติวเตอร์: {tutor.tutor.name}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
-            <Badge
-              className="text-lg px-3 py-3 bg-blue-100 text-black"
-              variant="outline"
-            >
+            <Tag color="blue" style={{ fontSize: "16px", padding: "8px 12px" }}>
               ค่า referral: {tutor.job.referral_reward.toFixed(0)} บาท
-            </Badge>
-            <Badge
-              className={`text-lg px-3 py-3 ${getStatusColor(tutor.status)}`}
-              variant="outline"
+            </Tag>
+            <Tag
+              color={getStatusColor(tutor.status)}
+              style={{ fontSize: "16px", padding: "8px 12px" }}
             >
               {tutor.status}
-            </Badge>
+            </Tag>
           </div>
         </div>
       </CardHeader>
@@ -211,7 +248,7 @@ function TutorWithReservationCard({ tutor, color }) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <BookOpenIcon className="h-5 w-5 text-[#F8D2DA]" />
+              <BookOpenIcon className={`h-5 w-5 ${textColor}`} />
               <div>
                 <p className="font-medium">วิชา</p>
                 <p className="text-muted-foreground">{subjectName}</p>
@@ -219,17 +256,17 @@ function TutorWithReservationCard({ tutor, color }) {
             </div>
 
             <div className="flex items-center gap-2">
-              <GraduationCapIcon className="h-5 w-5 text-[#F8D2DA]" />
+              <GraduationCapIcon className={`h-5 w-5 ${textColor}`} />
               <div>
-                <p className="font-medium">ระดับการศึกษา</p>
+                <p className="font-medium">ระดับชั้นผู้เรียน</p>
                 <p className="text-muted-foreground">{tutor.job.level}</p>
               </div>
             </div>
 
             <div className="flex items-center gap-2">
-              <MapPinIcon className="h-5 w-5 text-[#F8D2DA]" />
+              <MapPinIcon className={`h-5 w-5 ${textColor}`} />
               <div>
-                <p className="font-medium">สถานที่</p>
+                <p className="font-medium">สถานที่เรียน</p>
                 <p className="text-muted-foreground">{tutor.job.location}</p>
               </div>
             </div>
@@ -237,23 +274,16 @@ function TutorWithReservationCard({ tutor, color }) {
 
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <BanknoteIcon className="h-5 w-5 text-[#F8D2DA]" />
+              <BanknoteIcon className={`h-5 w-5 ${textColor}`} />
               <div>
-                <p className="font-medium">ค่าตอบแทน</p>
+                <p className="font-medium">ค่าแนะนำ</p>
                 <p className="text-muted-foreground">
-                  ฿{tutor.job.fee} ต่อชั่วโมง (ค่าที่เสนอ: ฿
+                  ฿{tutor.job.fee} ต่อชั่วโมง (ค่าสอนที่เสนอ: ฿
                   {tutor.job.propose_fee})
                 </p>
               </div>
             </div>
-
-            <div className="flex items-center gap-2">
-              <UserIcon className="h-5 w-5 text-[#F8D2DA]" />
-              <div>
-                <p className="font-medium">รหัสติวเตอร์</p>
-                <p className="text-muted-foreground">{tutor.tutor.id}</p>
-              </div>
-            </div>
+            คุณจะได้รับค่า referral
           </div>
         </div>
       </CardContent>
@@ -279,9 +309,7 @@ function TutorWithoutReservationCard({ tutor, color }) {
           </div>
         </div>
         <div className="mt-4">
-          <Badge variant="outline" className="bg-yellow-100 text-yellow-800">
-            ยังไม่มีงาน
-          </Badge>
+          <Tag color="gold">ยังไม่มีงาน</Tag>
         </div>
       </CardContent>
     </Card>
