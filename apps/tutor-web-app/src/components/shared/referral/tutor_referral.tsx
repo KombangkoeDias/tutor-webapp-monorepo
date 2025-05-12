@@ -233,16 +233,28 @@ function TutorWithReservationCard({ tutor, color }) {
               ติวเตอร์: {tutor.tutor.name}
             </p>
           </div>
-          <div className="flex flex-wrap gap-2">
-            <Tag color="blue" style={{ fontSize: "16px", padding: "8px 12px" }}>
-              ค่า referral: {tutor.job.referral_reward.toFixed(0)} บาท{" "}
-            </Tag>
-            <Tag
-              color={getStatusColor(tutor.status)}
-              style={{ fontSize: "16px", padding: "8px 12px" }}
-            >
-              {tutor.status}
-            </Tag>
+          <div>
+            <div className="flex flex-wrap gap-2">
+              <Tag
+                color="blue"
+                style={{ fontSize: "16px", padding: "8px 12px" }}
+              >
+                ค่า referral: {tutor.job.referral_reward.toFixed(0)} บาท{" "}
+              </Tag>
+              <Tag
+                color={getStatusColor(tutor.status)}
+                style={{ fontSize: "16px", padding: "8px 12px" }}
+              >
+                {tutor.status}
+              </Tag>
+            </div>
+            <div className="mt-2">
+              {tutor.status === "completed"
+                ? tutor.job.referred_tutor_payout
+                  ? "แอดมินได้โอนค่า referral ให้ท่านแล้ว"
+                  : "โปรดรอแอดมินโอนค่า referral 1-2 วัน"
+                : ""}
+            </div>
           </div>
         </div>
       </CardHeader>

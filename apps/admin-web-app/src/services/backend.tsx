@@ -19,4 +19,5 @@ export const ENDPOINTS = {
   APPROVE_SLIP: "/admin/reservations/approve_slip",
   REFERRAL_CODES: "/admin/referral/code",
   JOB_SUMMARY: "/admin/jobs/summary",
+  PAYOUTS: "/admin/referral/pending_payout",
 };

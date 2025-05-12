@@ -154,12 +154,24 @@ function JobCard({ job, color }) {
             </p>
           </div>
           <div>
-            <Tag color="blue" style={{ ...largeTagStyle, marginRight: "8px" }}>
-              ค่า commission: {job?.referral_fee * 0.2} บาท
-            </Tag>
-            <Tag color={getStatusColor(job.status)} style={largeTagStyle}>
-              {job.status}
-            </Tag>
+            <div>
+              <Tag
+                color="blue"
+                style={{ ...largeTagStyle, marginRight: "8px" }}
+              >
+                ค่า commission: {job?.referral_fee * 0.2} บาท
+              </Tag>
+              <Tag color={getStatusColor(job.status)} style={largeTagStyle}>
+                {job.status}
+              </Tag>
+            </div>
+            <div className="mt-2">
+              {job.status === "completed"
+                ? job.referred_job_payout
+                  ? "แอดมินได้โอนค่า referral ให้ท่านแล้ว"
+                  : "โปรดรอแอดมินโอนค่า referral 1-2 วัน"
+                : ""}
+            </div>
           </div>
         </div>
       </CardHeader>
@@ -237,7 +249,7 @@ function JobCard({ job, color }) {
             <div className="flex items-center gap-2">
               <BanknotesIcon className="h-5 w-5 text-[#F8D2DA]" />
               <div>
-                <p className="font-medium">ค่าตอบแทน</p>
+                <p className="font-medium">ค่าสอน</p>
                 <p className="text-muted-foreground">
                   ฿{job.fee} ต่อชั่วโมง (ค่าแนะนำ: ฿{job.referral_fee})
                 </p>
