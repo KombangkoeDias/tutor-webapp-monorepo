@@ -133,6 +133,11 @@ class AdminController extends BaseController {
     return this.handleResponse(resp);
   }
 
+  protected async GetPayouts() {
+    const resp = await GET(ENDPOINTS.PAYOUTS);
+    return this.handleResponse(resp);
+  }
+
   protected async AddCode(name: string, tutor_id?: number) {
     const resp = await POST(ENDPOINTS.REFERRAL_CODES, { name, tutor_id });
     return this.handleResponse(resp);
@@ -273,6 +278,13 @@ class AdminControllerToaster extends AdminController {
     return toast.promise(
       super.GetCodes(),
       this.getToastConfig("กำลังโหลด referral code ทั้งหมด")
+    );
+  }
+
+  async GetPayouts() {
+    return toast.promise(
+      super.GetPayouts(),
+      this.getToastConfig("กำลังโหลด referral payout ทั้งหมด")
     );
   }
 
