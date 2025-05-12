@@ -235,7 +235,7 @@ function TutorWithReservationCard({ tutor, color }) {
           </div>
           <div className="flex flex-wrap gap-2">
             <Tag color="blue" style={{ fontSize: "16px", padding: "8px 12px" }}>
-              ค่า referral: {tutor.job.referral_reward.toFixed(0)} บาท
+              ค่า referral: {tutor.job.referral_reward.toFixed(0)} บาท{" "}
             </Tag>
             <Tag
               color={getStatusColor(tutor.status)}
