@@ -94,7 +94,7 @@ export async function uploadAllFiles(
   ) {
     values.profile_pic_original = await uploadBase64(
       values.profile_pic_original,
-      getFileNameFromR2Link(values.profile_pic_original_url)
+      undefined
     );
   } else {
     values.profile_pic_original = getFileNameFromR2Link(
