@@ -14,6 +14,8 @@ import {
   handleListReferredJobsLink,
   handleSignUpLink,
 } from "@/chulatutordream/lib/utils";
+import { useAuthRedirect } from "@/components/hooks/use-auth-redirect";
+import { useRouter } from "next/navigation";
 
 enum CreateCodeOptions {
   TUTOR = "ติวเตอร์ที่สมัครกับเรา",
@@ -21,6 +23,7 @@ enum CreateCodeOptions {
 }
 
 export default function () {
+  useAuthRedirect();
   const [name, setName] = useState<string>("");
   const [tutor, setTutor] = useState<
     { label: string; value: number } | undefined
@@ -29,6 +32,8 @@ export default function () {
   const [mode, setMode] = useState<CreateCodeOptions>(
     CreateCodeOptions.NOT_TUTOR
   );
+
+  const router = useRouter();
 
   const {
     data: codes,
@@ -72,8 +77,16 @@ export default function () {
 
   return (
     <div className="max-w-3xl mx-auto p-4 space-y-6">
-      <h1 className="text-2xl font-bold">เพิ่ม Referral Code</h1>
-
+      <div className="flex justify-between">
+        <h1 className="text-2xl font-bold">เพิ่ม Referral Code</h1>
+        <Button
+          onClick={() => {
+            router.push("/job/referral/payout");
+          }}
+        >
+          ดู referral ทั้งหมดที่สำเร็จแล้ว
+        </Button>
+      </div>
       <div className="flex gap-2 items-end mb-4">
         <div className="flex-1">
           <Label>สร้างโค้ดให้</Label>

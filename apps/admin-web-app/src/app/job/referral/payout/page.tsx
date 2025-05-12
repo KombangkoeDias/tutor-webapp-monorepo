@@ -4,6 +4,7 @@ import { Table, Spin, Alert, Typography, Tag, Badge } from "antd";
 import { CheckCircle, Hourglass } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { adminController } from "@/services/controller";
+import { useAuthRedirect } from "@/components/hooks/use-auth-redirect";
 
 type THBSignProps = {
   className?: string;
@@ -41,6 +42,7 @@ interface ApiResponse {
 }
 
 export default function PendingPayoutsPage() {
+  useAuthRedirect();
   const {
     data: payouts,
     refetch,
