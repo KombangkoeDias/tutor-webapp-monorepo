@@ -116,6 +116,21 @@ class TutorController extends BaseController {
     return this.handleResponse(resp);
   }
 
+  protected async getReferral() {
+    const resp = await GET(ENDPOINTS.REFERRAL);
+    return this.handleResponse(resp);
+  }
+
+  protected async createReferral() {
+    const resp = await POST(ENDPOINTS.REFERRAL, {});
+    return this.handleResponse(resp);
+  }
+
+  protected async listByReferral(code?: string) {
+    const resp = await GET(ENDPOINTS.LIST_BY_REFERRAL + `?code=${code}`);
+    return this.handleResponse(resp);
+  }
+
   private async getPresignedUploadURL(
     endpoint: string,
     fileType: string,
@@ -218,11 +233,23 @@ class TutorControllerToaster extends TutorController {
     return this.showToastOnError(() => super.VerifyTutor(code, email));
   }
 
+  public getReferral() {
+    return this.showToastOnError(() => super.getReferral());
+  }
+
+  public createReferral() {
+    return this.showToastOnError(() => super.createReferral());
+  }
+
   public cancelReservation(reservationId: number): Promise<any> {
     return toast.promise(
       super.cancelReservation(reservationId),
       this.getToastConfig("กำลังยกเลิกการจองงาน")
     );
+  }
+
+  public listByReferral(code?: string) {
+    return this.showToastOnError(() => super.listByReferral(code));
   }
 }
 

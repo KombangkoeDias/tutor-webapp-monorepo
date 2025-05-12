@@ -1,14 +1,15 @@
 "use client";
 
-import { jobController } from "@/chulatutordream/services/controller/job";
-import { tutorController } from "@/chulatutordream/services/controller/tutor";
+import JobReferral from "@/components/shared/referral/job_referral";
+import { cn } from "@/lib/utils";
+import { jobController } from "@/services/controller/job";
+import { tutorController } from "@/services/controller/tutor";
 import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import JobReferral from "@/chulatutordream/components/shared/referral/job_referral";
-import TutorReferral from "@/chulatutordream/components/shared/referral/tutor_referral";
-import { cn } from "@/chulatutordream/lib/utils";
+import { Spin } from "antd";
+
+import React, { useEffect, useState } from "react";
+import TutorReferral from "@/components/shared/referral/tutor_referral";
+import { useAuthRedirect } from "@/components/hooks/use-auth-redirect";
 
 const tabs = [
   {
@@ -19,21 +20,41 @@ const tabs = [
   },
 ];
 
-export default function ReferralPage() {
+const ReferralPage = () => {
+  useAuthRedirect();
+  const {
+    data: referral,
+    isFetching: isFetchingReferral,
+    refetch,
+  } = useQuery({
+    queryKey: ["getReferral"],
+    queryFn: async () => {
+      return (await tutorController.getReferral()).referral;
+    },
+    initialData: {},
+  });
+
   const [activeTab, setActiveTab] = useState(0);
 
-  const urlSearchParams = useSearchParams();
-  const code = urlSearchParams.get("utm_ref") ?? undefined;
-  const router = useRouter();
-
   useEffect(() => {
-    if (!code) {
-      router.push("/");
+    // Check if referral code exists
+    if (!isFetchingReferral && !referral?.code) {
+      tutorController.createReferral().then(() => {
+        refetch();
+      });
     }
-  }, []);
+  }, [referral]);
+
+  if (isFetchingReferral) {
+    return (
+      <div className="w-full h-[100vh] flex justify-center items-center">
+        <Spin />
+      </div>
+    );
+  }
 
   return (
-    <div className="w-full">
+    <>
       <div className="mb-8 flex justify-center border-b">
         <div className="flex space-x-4 px-4">
           {tabs.map((tab, index) => (
@@ -43,16 +64,16 @@ export default function ReferralPage() {
               className={cn(
                 "relative py-4 text-lg font-medium transition-colors focus:outline-none",
                 activeTab === index
-                  ? "text-pink-600 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-pink-600"
-                  : "text-muted-foreground hover:text-pink-600"
+                  ? "text-teal-600 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-teal-600"
+                  : "text-muted-foreground hover:text-teal-600"
               )}
             >
               <div
                 className={cn(
                   "rounded-md border-2 px-6 py-3 transition-all",
                   activeTab === index
-                    ? "border-pink-500 bg-pink-50 text-pink-700 dark:border-pink-400 dark:bg-teal-950/30 dark:text-pink-300"
-                    : "border-muted bg-transparent hover:border-pink-300 hover:text-pink-600 dark:hover:border-pink-700 dark:hover:text-pink-400"
+                    ? "border-teal-500 bg-teal-50 text-teal-700 dark:border-teal-400 dark:bg-teal-950/30 dark:text-teal-300"
+                    : "border-muted bg-transparent hover:border-teal-300 hover:text-teal-600 dark:hover:border-teal-700 dark:hover:text-teal-400"
                 )}
               >
                 {tab.label}
@@ -61,13 +82,13 @@ export default function ReferralPage() {
           ))}
         </div>
       </div>
-      <div className="mt-4 flex justify-center">
-        {activeTab == 0 && <TutorListingPage code={code} />}
-        {activeTab == 1 && <JobListingPage code={code} />}
+      <div className="mt-4 flex justify-center mr-5">
+        {activeTab == 0 && <TutorListingPage code={referral?.code} />}
+        {activeTab == 1 && <JobListingPage code={referral?.code} />}
       </div>
-    </div>
+    </>
   );
-}
+};
 
 const JobListingPage = ({ code }) => {
   const {
@@ -89,7 +110,7 @@ const JobListingPage = ({ code }) => {
       isFetching={isFetching}
       jobs={jobs}
       referrer={referrer}
-      color="pink"
+      color="teal"
       code={code}
     />
   );
@@ -115,8 +136,10 @@ const TutorListingPage = ({ code }) => {
       data={data}
       isFetching={isFetching}
       referrer={referrer}
-      color="pink"
+      color="teal"
       code={code}
     />
   );
 };
+
+export default ReferralPage;

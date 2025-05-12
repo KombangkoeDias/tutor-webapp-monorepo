@@ -48,6 +48,7 @@ const SelectField = (props: SelectFieldProps) => {
       options={genOptions()}
       className={cn("text-black", props.className)}
       styles={props.selectStyles}
+      isClearable
     />
   );
 };

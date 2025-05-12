@@ -8,9 +8,33 @@ import { adminController } from "@/services/controller";
 import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { Spin } from "antd";
+import SelectField from "@/chulatutordream/components/shared/select";
+import {
+  handleGenerateLink,
+  handleListReferredJobsLink,
+  handleSignUpLink,
+} from "@/chulatutordream/lib/utils";
+import { useAuthRedirect } from "@/components/hooks/use-auth-redirect";
+import { useRouter } from "next/navigation";
+
+enum CreateCodeOptions {
+  TUTOR = "ติวเตอร์ที่สมัครกับเรา",
+  NOT_TUTOR = "คนทั่วไป",
+}
 
 export default function () {
+  useAuthRedirect();
   const [name, setName] = useState<string>("");
+  const [tutor, setTutor] = useState<
+    { label: string; value: number } | undefined
+  >(undefined);
+
+  const [mode, setMode] = useState<CreateCodeOptions>(
+    CreateCodeOptions.NOT_TUTOR
+  );
+
+  const router = useRouter();
+
   const {
     data: codes,
     refetch,
@@ -24,58 +48,111 @@ export default function () {
     initialData: [],
   });
 
+  const {
+    data: tutors,
+    refetch: refetchTutors,
+    isFetching: isFetchingTutors,
+  } = useQuery({
+    queryKey: ["getAllTutors"],
+    queryFn: async () => {
+      const data = await adminController.GetAllTutors(false);
+      const tutors = [
+        ...(data.to_review?.sign_up || []),
+        ...(data.to_review?.edit_profile || []),
+        ...(data.pending || []),
+        ...(data.others || []),
+      ].map((tutor: any) => ({
+        id: tutor.id,
+        name: tutor.name,
+      }));
+      return tutors;
+    },
+    initialData: [],
+  });
+
   const handleAddCode = async () => {
-    await adminController.AddCode(name);
+    await adminController.AddCode(name, tutor?.value);
     refetch();
-  };
-
-  const handleGenerateLink = async (code: string) => {
-    const baseLink = "https://chulatutordream.com"; // Replace with your actual URL
-    const link = `${baseLink}/jobs/create?utm_ref=${code}`;
-    await copyToClipboard(link);
-  };
-
-  const handleListReferredJobsLink = async (code: string) => {
-    const baseLink = "https://chulatutordream.com"; // Replace with your actual URL
-    const link = `${baseLink}/jobs/referral?utm_ref=${code}`;
-    await copyToClipboard(link);
-  };
-
-  const copyToClipboard = async (link: string) => {
-    try {
-      await navigator.clipboard.writeText(link);
-      toast.success("Link copied to clipboard!");
-    } catch (err) {
-      toast.error(`Failed to copy link: ${err}`);
-    }
   };
 
   return (
     <div className="max-w-3xl mx-auto p-4 space-y-6">
-      <h1 className="text-2xl font-bold">เพิ่ม Referral Code</h1>
-
+      <div className="flex justify-between">
+        <h1 className="text-2xl font-bold">เพิ่ม Referral Code</h1>
+        <Button
+          onClick={() => {
+            router.push("/job/referral/payout");
+          }}
+        >
+          ดู referral ทั้งหมดที่สำเร็จแล้ว
+        </Button>
+      </div>
       <div className="flex gap-2 items-end mb-4">
         <div className="flex-1">
-          <Label htmlFor="name">Code Name</Label>
-          <Input
-            id="name"
-            placeholder="Enter name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+          <Label>สร้างโค้ดให้</Label>
+          <SelectField
+            placeholder="Select Tutor"
+            options={[CreateCodeOptions.TUTOR, CreateCodeOptions.NOT_TUTOR]}
+            field={{
+              value: mode,
+              onChange: (value: any) => {
+                setMode(value);
+                if (value === CreateCodeOptions.NOT_TUTOR) {
+                  setTutor(undefined);
+                  setName("");
+                }
+              },
+            }}
+            className="mt-2 mb-2"
+            mode="VALUE_ONLY"
           />
+          {mode === CreateCodeOptions.TUTOR && (
+            <>
+              <Label>ติวเตอร์เจ้าของโค้ด</Label>
+              <SelectField
+                placeholder="Select Tutor"
+                options={tutors.map((item) => ({
+                  label: `${item.id} ${item.name}`,
+                  value: item.id,
+                }))}
+                field={{
+                  value: tutor,
+                  onChange: (value: any) => {
+                    setTutor(value);
+                    setName(
+                      tutors.find((t) => t.id === value.value)?.name ?? ""
+                    );
+                  },
+                }}
+                className="mt-2"
+              />
+            </>
+          )}
+          {mode === CreateCodeOptions.NOT_TUTOR && (
+            <>
+              <Label htmlFor="name">Code Name</Label>
+              <Input
+                id="name"
+                placeholder="Enter name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="mt-2"
+              />
+            </>
+          )}
         </div>
         <Button onClick={handleAddCode}>Add Code</Button>
       </div>
 
       <h1 className="text-2xl font-bold">Referral Code ทั้งหมด</h1>
 
-      {isFetching && (
+      {(isFetching || isFetchingTutors) && (
         <div className="flex justify-center items-center">
           <Spin />
         </div>
       )}
 
-      {!isFetching && (
+      {!isFetching && !isFetchingTutors && (
         <div className="space-y-4">
           {codes.map((item) => (
             <Card key={item.id}>
@@ -86,6 +163,11 @@ export default function () {
                 <div>
                   <strong>Code:</strong> {item.code}
                 </div>
+                {item.tutor_id && (
+                  <div>
+                    <strong>Tutor Id:</strong> {item.tutor_id}
+                  </div>
+                )}
                 <Button
                   size="sm"
                   onClick={() => handleGenerateLink(item.code)}
@@ -95,9 +177,16 @@ export default function () {
                 </Button>
                 <Button
                   size="sm"
+                  onClick={() => handleSignUpLink(item.code)}
+                  className="mr-4"
+                >
+                  Copy Link สมัครติวเตอร์
+                </Button>
+                <Button
+                  size="sm"
                   onClick={() => handleListReferredJobsLink(item.code)}
                 >
-                  Copy Link ลิสต์งาน
+                  Copy Link ลิสต์งาน/การจองงาน
                 </Button>
               </CardContent>
             </Card>
