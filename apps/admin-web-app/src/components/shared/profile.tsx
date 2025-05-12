@@ -122,8 +122,9 @@ export default function TutorProfileForm({
                   defaultCropSettings={JSON.parse(
                     form.getValues("profile_pic_crop_setting") ?? "null"
                   )}
-                  size="xl"
+                  size="md"
                   readOnly={readOnly}
+                  profilePage={false}
                 />
               </div>
               <motion.div

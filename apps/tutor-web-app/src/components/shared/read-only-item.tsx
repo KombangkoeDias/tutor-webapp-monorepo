@@ -15,7 +15,7 @@ export default function ReadOnlyFormItem({
   const { token } = theme.useToken();
   return (
     <div
-      className="p-3 "
+      className="p-3 whitespace-pre"
       style={{
         backgroundColor: token.colorFillAlter,
         borderRadius: token.borderRadius,
