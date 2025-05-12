@@ -129,7 +129,6 @@ export default function TutorProfile() {
       uploadAllFiles(values),
       tutorController.getToastConfig("กำลังอัพโหลดไฟล์ทั้งหมด")
     );
-    console.log("kbd requestValues", requestValues);
     if (!requestValues.accolade) {
       requestValues.accolade = undefined;
     }
