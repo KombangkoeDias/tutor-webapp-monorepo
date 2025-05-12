@@ -16,6 +16,8 @@ type TutorDetail = {
   admin_verified: boolean;
   admin_comments: { created_at_ms: string; detail: string }[];
   updated_at_ms: string;
+  profile_pic_original: string;
+  profile_pic_crop_setting: string;
 };
 
 // Define the context type
