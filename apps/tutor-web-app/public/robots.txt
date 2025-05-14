@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://jobtutordream.com
+
+# Sitemaps
+Sitemap: https://jobtutordream.com/sitemap.xml
