@@ -17,6 +17,7 @@ import { jobController } from "@/chulatutordream/services/controller/job";
 import { useSharedConstants } from "@/chulatutordream/components/hooks/constant-context";
 import { Input } from "@/components/ui/input";
 import { Checkbox, Modal } from "antd";
+import { Checkbox as ShadCNCheckbox } from "@/components/ui/checkbox";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
@@ -28,6 +29,7 @@ import {
   Mail,
   Phone,
   MessageSquare,
+  CheckCircle,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import {
@@ -54,6 +56,7 @@ const errMsg = {
   location: "กรุณากรอกสถานที่เรียน",
   fee: "กรุณากรอกค่าเรียนที่ต้องการ",
   contact_preference: "กรุณาเลือกช่องทางติดต่อ",
+  accept_terms_and_conditions: "กรุณาอ่านและยอมรับเงื่อนไขการให้บริการ",
 };
 
 const formSchema = z.object({
@@ -151,6 +154,13 @@ const formSchema = z.object({
     .email({ message: "รูปแบบอีเมลไม่ถูกต้อง" }),
   line_id: z.string({ required_error: "กรุณากรอกไลน์ ID" }),
   tags: z.array(z.object({ value: z.string(), label: z.string() })).optional(),
+  accept_terms_and_conditions: z
+    .boolean({
+      required_error: "กรุณาอ่านและยอมรับเงื่อนไขการให้บริการ",
+    })
+    .refine((val) => val, {
+      message: "กรุณาอ่านและยอมรับเงื่อนไขการให้บริการ",
+    }),
 });
 
 const fadeIn = {
@@ -188,6 +198,8 @@ const selectStyles = {
 function JobCreationForm() {
   const tokenRef = useRef<string | null>(null);
   const urlSearchParams = useSearchParams();
+  const [openTermsAndConditionModal, setOpenTermsAndConditionModal] =
+    useState(false);
 
   const code = urlSearchParams.get("utm_ref") ?? undefined;
   const { executeRecaptcha } = useGoogleReCaptcha();
@@ -335,7 +347,10 @@ function JobCreationForm() {
     );
     requestBody.token = token;
     requestBody.referral_code = code;
-    requestBody = _.omit(requestBody, ["subject"]);
+    requestBody = _.omit(requestBody, [
+      "subject",
+      "accept_terms_and_conditions",
+    ]);
     await jobController.CreateJob(requestBody).finally(() => {
       setIsLoading(false);
     });
@@ -1194,6 +1209,49 @@ function JobCreationForm() {
                 })}
               </div>
             </motion.div>
+            <motion.div
+              variants={fadeIn}
+              className="bg-white rounded-xl shadow-lg p-6 border border-pink-100"
+            >
+              <h2 className="text-lg font-medium text-gray-900 flex items-center mb-2">
+                <CheckCircle className="w-5 h-5 mr-2 text-pink-500" />
+                ข้อตกลงและเงื่อนไข
+              </h2>
+              <div className="space-y-4">
+                <div className="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg">
+                  <Field
+                    form={form}
+                    name="accept_terms_and_conditions"
+                    shadCNComponent={(field) => {
+                      return (
+                        <>
+                          <ShadCNCheckbox
+                            id="terms"
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                            className="border-pink-400 data-[state=checked]:bg-pink-600"
+                          />
+                          &nbsp;
+                          <label htmlFor="terms" className="text-sm">
+                            ยอมรับ
+                          </label>
+                          &nbsp;
+                          <span
+                            className="text-pink-600 font-medium cursor-pointer hover:underline"
+                            onClick={() => {
+                              setOpenTermsAndConditionModal(true);
+                            }}
+                          >
+                            เงื่อนไขการใช้บริการและนโยบายความเป็นส่วนตัว{" "}
+                            <span className="text-red-500">*</span>
+                          </span>
+                        </>
+                      );
+                    }}
+                  />
+                </div>
+              </div>
+            </motion.div>
 
             <motion.div variants={fadeIn} className="mt-8">
               <Button
@@ -1236,6 +1294,10 @@ function JobCreationForm() {
           </div>
         </form>
       </motion.div>
+      <TermsAndConditionsModal
+        isOpen={openTermsAndConditionModal}
+        setIsOpen={setOpenTermsAndConditionModal}
+      />
       <Modal
         open={showSuccessModal}
         onClose={() => {
@@ -1281,3 +1343,132 @@ export default function JobCreationFormWithCaptcha() {
     </GoogleReCaptchaProvider>
   );
 }
+
+const TermsAndConditionsModal = (props: any) => {
+  return (
+    <Modal
+      title={
+        <span className="text-pink-700 font-bold">เงื่อนไขการใช้บริการ</span>
+      }
+      open={props.isOpen}
+      onOk={() => props.setIsOpen(false)}
+      cancelButtonProps={{ hidden: true }}
+      onCancel={() => props.setIsOpen(false)}
+      width={"50%"}
+      okButtonProps={{
+        className: "!bg-pink-500 !hover:bg-pink-600",
+      }}
+    >
+      <div className="overflow-y-auto max-h-[60vh] p-4 bg-pink-50 rounded-lg">
+        <p className="space-y-4 text-gray-700">
+          <span className="font-bold text-pink-700">
+            นโยบายความเป็นส่วนตัว (Privacy Policy)
+            และความยินยอมในการใช้ข้อมูลส่วนบุคคล (PDPA Consent)
+          </span>
+          <br />
+          อัปเดตล่าสุด: 11 May 2025
+          <br />
+          เว็บไซต์ https://chulatutordream.com/
+          ให้ความสำคัญกับการคุ้มครองข้อมูลส่วนบุคคลของผู้ใช้งานทุกท่าน รวมถึง
+          ผู้ปกครอง, นักเรียน, และ ติวเตอร์ โดยการเก็บ ใช้
+          และเปิดเผยข้อมูลส่วนบุคคล จะเป็นไปตามข้อกำหนดของ
+          พระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 (PDPA)
+          <br />
+          <br />
+          <b className="text-pink-700">1. ข้อมูลส่วนบุคคลที่เก็บรวบรวม</b>
+          <br />
+          เราอาจเก็บรวบรวมข้อมูล เช่น:
+          <br />
+          ชื่อ-นามสกุล, เบอร์โทรศัพท์, อีเมล, ไลน์ไอดี
+          <br />
+          ข้อมูลการเรียน เช่น วิชา, พื้นฐานผู้เรียน, โรงเรียน, วันเวลาที่สะดวก
+          เป็นต้น
+          <br />
+          รายละเอียดคอร์สเรียน เช่น สถานที่เรียน ค่าเรียนต่อชั่วโมง เป็นต้น
+          <br />
+          รายละเอียดการชำระเงินหรือบัญชีธนาคาร (ในกรณีที่เกี่ยวข้อง)
+          <br />
+          ข้อมูลการใช้งานระบบ เช่น log, cookies, IP address
+          <br />
+          <br />
+          <b className="text-pink-700">2. วัตถุประสงค์ของการใช้ข้อมูล</b>
+          <br />
+          เพื่อจัดหาติวเตอร์ให้นักเรียน
+          <br />
+          เพื่อการติดต่อและสื่อสารเกี่ยวกับบริการ
+          <br />
+          เพื่อยืนยันตัวตน และความปลอดภัยในการใช้งาน
+          <br />
+          เพื่อจัดการธุรกรรมการเงินที่เกี่ยวข้อง
+          <br />
+          เพื่อพัฒนา ปรับปรุง และวิเคราะห์ระบบ/บริการ
+          <br />
+          เพื่อปฏิบัติตามข้อกฎหมายที่เกี่ยวข้อง
+          <br />
+          <br />
+          <b className="text-pink-700">3. การเปิดเผยข้อมูลส่วนบุคคล</b>
+          <br />
+          ข้อมูลของท่านจะถูกเปิดเผยต่อบุคคลที่เกี่ยวข้อง เท่าที่จำเป็น เช่น:
+          <br />
+          ผู้ปกครองของนักเรียน
+          <br />
+          ติวเตอร์ที่ได้รับการจับคู่งานกับนักเรียน
+          <br />
+          ผู้ให้บริการระบบเทคโนโลยี / ระบบชำระเงิน
+          <br />
+          <br />
+          <b className="text-pink-700">
+            4. ความยินยอมจากผู้ปกครอง (กรณีผู้เยาว์)
+          </b>
+          <br />
+          หากผู้ใช้งานมีอายุต่ำกว่า 20 ปีบริบูรณ์:
+          <br />
+          จำเป็นต้องได้รับความยินยอมจาก ผู้ปกครองตามกฎหมาย
+          <br />
+          การลงทะเบียนหรือใช้บริการ ถือว่าผู้ปกครองรับทราบและยินยอมให้เก็บ ใช้
+          และเปิดเผยข้อมูล
+          <br />
+          <br />
+          <b className="text-pink-700">5. ระยะเวลาในการเก็บรักษาข้อมูล</b>
+          <br />
+          เราจะเก็บรักษาข้อมูลส่วนบุคคลของท่านไว้
+          ตราบเท่าที่จำเป็นต่อวัตถุประสงค์ที่ได้แจ้งไว้ หรือ
+          ตามระยะเวลาที่กฎหมายกำหนด เช่น:
+          <br />
+          เอกสารธุรกรรมทางบัญชีและภาษี อาจถูกเก็บไว้นานสูงสุด 10 ปี
+          ตามประมวลรัษฎากร
+          <br />
+          เมื่อพ้นระยะเวลาจำเป็น เราจะลบหรือทำลายข้อมูลของท่านอย่างปลอดภัย
+          <br />
+          <br />
+          <b className="text-pink-700">6. สิทธิของเจ้าของข้อมูลส่วนบุคคล</b>
+          <br />
+          ท่านมีสิทธิ:
+          <br />
+          เข้าถึง / ขอสำเนาข้อมูลของท่าน
+          <br />
+          แก้ไข ลบ ระงับการใช้ หรือเพิกถอนความยินยอมเมื่อใดก็ได้
+          <br />
+          ร้องเรียนต่อสำนักงานคณะกรรมการคุ้มครองข้อมูลส่วนบุคคล
+          หากเห็นว่าถูกละเมิดสิทธิ
+          <br />
+          <br />
+          <b className="text-pink-700">7. ช่องทางติดต่อ</b>
+          <br />
+          https://www.chulatutordream.com/
+          <br />
+          อีเมล: chulatutordream@gmail.com
+          <br />
+          โทร: 086-896-5858
+          <br />
+          ผู้ควบคุมข้อมูลส่วนบุคคล: ชัสมา ไตรสุริยธรรมา
+          <br />
+          <br />
+          โดยการสมัครและส่งแบบฟอร์มนี้ ถือว่าท่านได้อ่าน เข้าใจ
+          และยินยอมให้เว็บไซต์เก็บ ใช้
+          และเปิดเผยข้อมูลส่วนบุคคลตามที่ระบุไว้ข้างต้นแล้ว
+        </p>
+      </div>
+    </Modal>
+  );
+};
