@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     siteName: "Chula Tutor Dream",
     images: [
       {
-        url: "https://jobtutordream.com/favicon.png",
+        url: "https://chulatutordream.com/favicon.png",
         width: 800,
         height: 800,
       },
