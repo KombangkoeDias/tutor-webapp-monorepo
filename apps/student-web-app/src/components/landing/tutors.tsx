@@ -14,13 +14,13 @@ import {
   Sparkles,
   Medal,
 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
 export default function TutorsSection() {
   const { ref, inView } = useInView({
     triggerOnce: true,
-    threshold: 0.1,
+    threshold: 0.01,
   });
 
   return (
@@ -30,8 +30,8 @@ export default function TutorsSection() {
       <div className="absolute top-0 left-0 w-full h-full bg-[url('/pattern-dots.svg')] opacity-5"></div>
 
       {/* Subtle blob decorations */}
-      <div className="absolute top-40 right-10 w-72 h-72 bg-pink-100/20 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-      <div className="absolute bottom-40 left-1/3 w-80 h-80 bg-purple-100/20 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+      {/* <div className="absolute top-40 right-10 w-72 h-72 bg-pink-100/20 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div> */}
+      {/* <div className="absolute bottom-40 left-1/3 w-80 h-80 bg-purple-100/20 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div> */}
 
       <div className="px-4 md:px-6 relative z-10" ref={ref}>
         <motion.div
@@ -252,109 +252,95 @@ function TutorCard({
                 value="education"
                 className="mt-4 h-[220px] overflow-y-auto custom-scrollbar"
               >
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key="education"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.3 }}
-                    className="space-y-2"
-                  >
-                    {education.length > 0 ? (
-                      <ul className="space-y-3 text-sm">
-                        {(expanded ? education : education.slice(0, 5)).map(
-                          (item, index) => (
-                            <motion.li
-                              key={index}
-                              className="flex items-start p-2 rounded-lg hover:bg-pink-50/50 transition-colors"
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{
-                                duration: 0.3,
-                                delay: index * 0.05,
-                              }}
-                            >
-                              <div className="bg-gradient-to-r from-pink-100 to-pink-200 p-1.5 rounded-full mr-3 flex-shrink-0 mt-0.5">
-                                <GraduationCap className="h-3.5 w-3.5 text-pink-600" />
-                              </div>
-                              <span className="text-gray-700">{item}</span>
-                            </motion.li>
-                          )
-                        )}
-                      </ul>
-                    ) : (
-                      <p className="text-sm text-gray-500 italic">
-                        ไม่มีข้อมูล
-                      </p>
-                    )}
-                  </motion.div>
-                </AnimatePresence>
+                <motion.div
+                  key="education"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="space-y-2"
+                >
+                  {education.length > 0 ? (
+                    <ul className="space-y-3 text-sm">
+                      {(expanded ? education : education.slice(0, 5)).map(
+                        (item, index) => (
+                          <motion.li
+                            key={index}
+                            className="flex items-start p-2 rounded-lg hover:bg-pink-50/50 transition-colors"
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{
+                              duration: 0.3,
+                              delay: index * 0.05,
+                            }}
+                          >
+                            <div className="bg-gradient-to-r from-pink-100 to-pink-200 p-1.5 rounded-full mr-3 flex-shrink-0 mt-0.5">
+                              <GraduationCap className="h-3.5 w-3.5 text-pink-600" />
+                            </div>
+                            <span className="text-gray-700">{item}</span>
+                          </motion.li>
+                        )
+                      )}
+                    </ul>
+                  ) : (
+                    <p className="text-sm text-gray-500 italic">ไม่มีข้อมูล</p>
+                  )}
+                </motion.div>
               </TabsContent>
 
               <TabsContent
                 value="experience"
                 className="mt-4 h-[220px] overflow-y-auto custom-scrollbar"
               >
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key="experience"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.3 }}
-                    className="space-y-2"
-                  >
-                    {experience.length > 0 ? (
-                      <ul className="space-y-3 text-sm">
-                        {(expanded ? experience : experience.slice(0, 5)).map(
-                          (item, index) => (
-                            <motion.li
-                              key={index}
-                              className="flex items-start p-2 rounded-lg hover:bg-pink-50/50 transition-colors"
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{
-                                duration: 0.3,
-                                delay: index * 0.05,
-                              }}
-                            >
-                              <div className="bg-gradient-to-r from-pink-100 to-pink-200 p-1.5 rounded-full mr-3 flex-shrink-0 mt-0.5">
-                                <BookOpen className="h-3.5 w-3.5 text-pink-600" />
-                              </div>
-                              <span className="text-gray-700">{item}</span>
-                            </motion.li>
-                          )
-                        )}
-                      </ul>
-                    ) : (
-                      <p className="text-sm text-gray-500 italic">
-                        ไม่มีข้อมูล
-                      </p>
-                    )}
-                  </motion.div>
-                </AnimatePresence>
+                <motion.div
+                  key="experience"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="space-y-2"
+                >
+                  {experience.length > 0 ? (
+                    <ul className="space-y-3 text-sm">
+                      {(expanded ? experience : experience.slice(0, 5)).map(
+                        (item, index) => (
+                          <motion.li
+                            key={index}
+                            className="flex items-start p-2 rounded-lg hover:bg-pink-50/50 transition-colors"
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{
+                              duration: 0.3,
+                              delay: index * 0.05,
+                            }}
+                          >
+                            <div className="bg-gradient-to-r from-pink-100 to-pink-200 p-1.5 rounded-full mr-3 flex-shrink-0 mt-0.5">
+                              <BookOpen className="h-3.5 w-3.5 text-pink-600" />
+                            </div>
+                            <span className="text-gray-700">{item}</span>
+                          </motion.li>
+                        )
+                      )}
+                    </ul>
+                  ) : (
+                    <p className="text-sm text-gray-500 italic">ไม่มีข้อมูล</p>
+                  )}
+                </motion.div>
               </TabsContent>
 
               <TabsContent
                 value="achievements"
                 className="mt-4 h-[220px] overflow-y-auto custom-scrollbar"
               >
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key="achievements"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.3 }}
-                    className="space-y-2"
-                  >
-                    {achievements.length > 0 ? (
-                      <ul className="space-y-3 text-sm">
-                        {(expanded
-                          ? achievements
-                          : achievements.slice(0, 5)
-                        ).map((item, index) => (
+                <motion.div
+                  key="achievements"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="space-y-2"
+                >
+                  {achievements.length > 0 ? (
+                    <ul className="space-y-3 text-sm">
+                      {(expanded ? achievements : achievements.slice(0, 5)).map(
+                        (item, index) => (
                           <motion.li
                             key={index}
                             className="flex items-start p-2 rounded-lg hover:bg-pink-50/50 transition-colors"
@@ -367,48 +353,46 @@ function TutorCard({
                             </div>
                             <span className="text-gray-700">{item}</span>
                           </motion.li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p className="text-sm text-gray-500 italic">
-                        ไม่มีข้อมูล
-                      </p>
-                    )}
+                        )
+                      )}
+                    </ul>
+                  ) : (
+                    <p className="text-sm text-gray-500 italic">ไม่มีข้อมูล</p>
+                  )}
 
-                    {testScores && testScores.length > 0 && (
-                      <motion.div
-                        className="mt-4 p-3 bg-gradient-to-r from-pink-50 to-purple-50/50 rounded-lg border border-pink-100"
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3, delay: 0.2 }}
-                      >
-                        <p className="font-medium text-sm mb-2 flex items-center text-pink-700">
-                          <Medal className="h-4 w-4 mr-2 text-pink-500" />
-                          คะแนนสอบ:
-                        </p>
-                        <ul className="space-y-2 text-sm">
-                          {(expanded ? testScores : testScores.slice(0, 5)).map(
-                            (score, index) => (
-                              <motion.li
-                                key={index}
-                                className="flex items-center ml-6"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{
-                                  duration: 0.3,
-                                  delay: 0.3 + index * 0.05,
-                                }}
-                              >
-                                <Star className="h-3 w-3 text-yellow-400 mr-2" />
-                                <span className="text-gray-700">{score}</span>
-                              </motion.li>
-                            )
-                          )}
-                        </ul>
-                      </motion.div>
-                    )}
-                  </motion.div>
-                </AnimatePresence>
+                  {testScores && testScores.length > 0 && (
+                    <motion.div
+                      className="mt-4 p-3 bg-gradient-to-r from-pink-50 to-purple-50/50 rounded-lg border border-pink-100"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, delay: 0.2 }}
+                    >
+                      <p className="font-medium text-sm mb-2 flex items-center text-pink-700">
+                        <Medal className="h-4 w-4 mr-2 text-pink-500" />
+                        คะแนนสอบ:
+                      </p>
+                      <ul className="space-y-2 text-sm">
+                        {(expanded ? testScores : testScores.slice(0, 5)).map(
+                          (score, index) => (
+                            <motion.li
+                              key={index}
+                              className="flex items-center ml-6"
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              transition={{
+                                duration: 0.3,
+                                delay: 0.3 + index * 0.05,
+                              }}
+                            >
+                              <Star className="h-3 w-3 text-yellow-400 mr-2" />
+                              <span className="text-gray-700">{score}</span>
+                            </motion.li>
+                          )
+                        )}
+                      </ul>
+                    </motion.div>
+                  )}
+                </motion.div>
               </TabsContent>
             </Tabs>
           </div>
@@ -443,6 +427,7 @@ const tutors = [
     image: "/tutors/พี่ดรีม.jpg",
     education: [
       "บัญชีบัณฑิต จุฬาลงกรณ์มหาวิทยาลัย (เกียรตินิยม)",
+      "โรงเรียนเตรียมอุดมศึกษา (ห้อง Gifted วิทย์)",
       "อดีตนิสิตคณะแพทยศาสตร์ มศว (ลาออกตอนปี 2)",
       "สอบติดคณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง",
     ],
@@ -471,6 +456,7 @@ const tutors = [
     education: [
       "วิศวกรรมศาสตร์บัณฑิต จุฬาลงกรณ์มหาวิทยาลัย (เกียรตินิยมอันดับ 1)",
       "ในขณะที่ศึกษาในชั้นปีที่ 1 ได้รับเกรดเฉลี่ยรวมทุกรายวิชา 4.00",
+      "สอบติดแพทย์จุฬา ปี 2561 (คะแนนรวม 75.146/100)",
     ],
     experience: [
       "สอนน้องโรงเรียนสามเสนติดแพทย์ ม.เชียงใหม่",
@@ -540,14 +526,18 @@ const tutors = [
     name: "พี่แทนตา",
     image: "/tutors/พี่แทนตา.png",
     education: [
-      "ปริญญาตรี สาขาเศรษฐศาสตร์ University of British Columbia (GPA 3.70)",
-      "โรงเรียนเตรียมอุดมศึกษา (ศิลป์-คำนวณ), แลกเปลี่ยนที่ Brown City High School, Michigan, USA",
-      "มัธยมต้น: โรงเรียนสามเสนวิทยาลัย (โครงการ EIS), GPA 3.95",
+      "ปริญญาตรี สาขาเศรษฐศาสตร์ University of British Columbia (First Class Honours)",
+      "สอบติดอักษรจุฬา อินเตอร์ (BALAC)",
+      "สอบติดทันตแพทยศาสตร์ อินเตอร์ มหิดล (MIDS)",
+      "สอบติด Faculty of Architecture, University of Toronto",
+      "แลกเปลี่ยนที่ Michigan, USA",
+      "มัธยม: โรงเรียนสามเสนวิทยาลัย (โครงการ EIS), GPA 3.95 , และโรงเรียนเตรียมอุดมศึกษา (ศิลป์-คำนวณ)",
     ],
     experience: [
       "สอนภาษาอังกฤษกว่า 4 ปี ทั้งเด็กประถม มัธยม นักเรียนทุน และผู้ใหญ่",
       "สอน IELTS ตัวต่อตัว และติวสอบเข้ารร.ชั้นนำ",
       "เคยสอน Study Plan และ Personal Statement สำหรับทุน GKS",
+      "เคยสอน SOP เข้ามหาลัย",
       "ทำงานด้าน Marketing and Communications ที่แคนาดากว่า 2 ปี",
       "ฝึกงานที่กระทรวงการต่างประเทศ, ธ.ก.ส., A49 HD, BACCOM UK ฯลฯ",
     ],
@@ -559,7 +549,7 @@ const tutors = [
       "ได้รับรางวัลจากสมเด็จพระสังฆราชฯ ขณะเรียนที่สามเสน",
       "เหรียญทองเรียงความ งานศิลปหัตถกรรมฯ ระดับกรุงเทพฯ",
     ],
-    subjects: ["ภาษาอังกฤษ", "Writing", "IELTS", "เศรษฐศาสตร์"],
+    subjects: ["ภาษาอังกฤษ"],
   },
   {
     name: "พี่ฟิลม์",
