@@ -174,7 +174,6 @@ const JobDrawer: FC<JobDrawerProps> = ({
                     onClick={async () => {
                       await debouncedReserve(selectedJobId, proposition);
                     }}
-                    disabled
                   >
                     จองงาน
                   </Button>
