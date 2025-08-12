@@ -584,7 +584,7 @@ const tutors = [
     achievements: [
       "GAT ENG 292.5/300",
       "ONET ENG 92.5",
-      "IELTS 7.5",
+      "9 วิชาสามัญ ENG 93.75/100",
       "สัมภาษณ์ YES Top 100",
     ],
     subjects: ["ภาษาอังกฤษ"],
