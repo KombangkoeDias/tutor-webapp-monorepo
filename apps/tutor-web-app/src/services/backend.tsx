@@ -64,6 +64,8 @@ export const ENDPOINTS = {
   GET_JOB_REFERRAL: "/job/search_by_referral",
   REFERRAL: "/tutor/referral",
   LIST_BY_REFERRAL: "/tutor/list_by_referral",
+  FORGET_PASSWORD_ENDPOINT: "/tutor/forget_password",
+  RESET_PASSWORD_ENDPOINT: "/tutor/reset_password",
 };
 
 export const toastCaption = {

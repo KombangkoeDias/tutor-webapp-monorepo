@@ -131,6 +131,19 @@ class TutorController extends BaseController {
     return this.handleResponse(resp);
   }
 
+  protected async ForgetPassword(data: { email: string }): Promise<void> {
+    const resp = await POST(ENDPOINTS.FORGET_PASSWORD_ENDPOINT, data);
+    return this.handleResponse(resp);
+  }
+
+  protected async ResetPassword(data: {
+    token: string;
+    password: string;
+  }): Promise<void> {
+    const resp = await POST(ENDPOINTS.RESET_PASSWORD_ENDPOINT, data);
+    return this.handleResponse(resp);
+  }
+
   private async getPresignedUploadURL(
     endpoint: string,
     fileType: string,
@@ -250,6 +263,23 @@ class TutorControllerToaster extends TutorController {
 
   public listByReferral(code?: string) {
     return this.showToastOnError(() => super.listByReferral(code));
+  }
+
+  public ForgetPassword(data: { email: string }): Promise<void> {
+    return toast.promise(
+      super.ForgetPassword(data),
+      this.getToastConfig("กำลังส่งลิงก์รีเซ็ตรหัสผ่าน")
+    );
+  }
+
+  public ResetPassword(data: {
+    token: string;
+    password: string;
+  }): Promise<void> {
+    return toast.promise(
+      super.ResetPassword(data),
+      this.getToastConfig("กำลังรีเซ็ตรหัสผ่าน")
+    );
   }
 }
 
