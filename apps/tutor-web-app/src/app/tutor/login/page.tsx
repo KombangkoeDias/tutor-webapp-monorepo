@@ -73,12 +73,12 @@ const LoginForm = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          {/* TODO: <Link
-            href="/forgot-password"
-            className="text-sm text-blue-500 hover:text-blue-600 block"
+          <Link
+            href="/tutor/forget-password"
+            className="text-sm text-[#4caf4f] hover:text-[#4caf4f]/80 hover:underline block"
           >
             ลืมรหัสผ่าน
-          </Link> */}
+          </Link>
 
           <Button
             type="submit"
