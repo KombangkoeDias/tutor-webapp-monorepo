@@ -120,7 +120,7 @@ const JobDrawer: FC<JobDrawerProps> = ({
           <div>
             {isTutorAllVerified() && (
               <Tag className="text-lg" color="magenta">
-                ค่าแนะนำ: {job?.referral_fee} บาท
+                ค่าแนะนำ: ไม่มีค่าแนะนำ
               </Tag>
             )}
             {job?.tags?.length > 0 && (
