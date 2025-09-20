@@ -10,7 +10,7 @@ import Features from "@/components/landing/features";
 import Process from "@/components/landing/process";
 import TutorsSection from "@/components/landing/tutors";
 import { motion } from "framer-motion";
-import { Sparkles } from "lucide-react";
+import { Sparkles, BookOpen, ArrowRight } from "lucide-react";
 
 export default function Home() {
   return <ContinuousReviewCarousel />;
@@ -128,6 +128,100 @@ function ContinuousReviewCarousel() {
           </div>
         </div>
       </div>
+
+      {/* Blog Banner */}
+      <motion.div
+        className="relative py-16 bg-gradient-to-r from-purple-50 via-pink-50 to-purple-50"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+      >
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <Card className="overflow-hidden border-0 shadow-2xl bg-gradient-to-r from-white to-pink-50/50 backdrop-blur-sm">
+              <CardContent className="p-8 md:p-12">
+                <div className="flex flex-col lg:flex-row items-center gap-8">
+                  {/* Left side - Content */}
+                  <div className="flex-1 text-center lg:text-left">
+                    <motion.div
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-pink-100 to-purple-100 text-pink-700 font-medium mb-4"
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.2, duration: 0.5 }}
+                    >
+                      <BookOpen className="h-4 w-4" />
+                      <span>บทความใหม่</span>
+                    </motion.div>
+
+                    <motion.h2
+                      className="text-3xl md:text-4xl font-bold text-gray-800 mb-4"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3, duration: 0.6 }}
+                    >
+                      เรื่องราวประสบการณ์จริงจาก
+                      <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-600">
+                        {" "}
+                        แพทย์จบใหม่
+                      </span>
+                    </motion.h2>
+
+                    <motion.p
+                      className="text-lg text-gray-600 mb-6 max-w-2xl"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4, duration: 0.6 }}
+                    >
+                      อ่านเรื่องราวการเรียนแพทย์ตลอด 6 ปี และการทำงานในฐานะแพทย์
+                      จากประสบการณ์จริงที่เต็มไปด้วยแรงบันดาลใจและความเข้าใจชีวิต
+                    </motion.p>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5, duration: 0.6 }}
+                    >
+                      <Button
+                        className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-8 py-3 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+                        onClick={() =>
+                          router.push(
+                            "/blog/a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+                          )
+                        }
+                      >
+                        อ่านบทความ
+                        <ArrowRight className="ml-2 h-5 w-5" />
+                      </Button>
+                    </motion.div>
+                  </div>
+
+                  {/* Right side - Preview Image */}
+                  <motion.div
+                    className="flex-shrink-0"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.6, duration: 0.6 }}
+                  >
+                    <div className="relative">
+                      <div className="w-80 h-64 rounded-2xl overflow-hidden shadow-2xl">
+                        <img
+                          src="/blog/cover.png"
+                          alt="ประสบการณ์การเรียนแพทย์"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      {/* Decorative elements */}
+                      <div className="absolute -top-4 -right-4 w-8 h-8 bg-pink-400 rounded-full opacity-80"></div>
+                      <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-purple-400 rounded-full opacity-80"></div>
+                    </div>
+                  </motion.div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </motion.div>
 
       <TutorsSection />
 
