@@ -24,6 +24,7 @@ export default function Header() {
   const navigation = [
     { name: "หน้าแรก", href: "/" },
     { name: "หาติวเตอร์", href: "/jobs/create" },
+    { name: "บล็อก", href: "/blog" },
     code && jobId
       ? {
           name: "เลือกติวเตอร์",
@@ -68,12 +69,14 @@ export default function Header() {
                     key={item?.name}
                     href={item?.href}
                     aria-current={
-                      item?.href?.split("?")[0] === pathName
+                      item?.href?.split("?")[0] === pathName ||
+                      (item?.name === "บล็อก" && pathName.startsWith("/blog"))
                         ? "page"
                         : undefined
                     }
                     className={classNames(
-                      item?.href?.split("?")[0] === pathName
+                      item?.href?.split("?")[0] === pathName ||
+                        (item?.name === "บล็อก" && pathName.startsWith("/blog"))
                         ? "bg-[#DA70D6] text-white"
                         : "text-black hover:bg-[#FAA0A0] hover:text-white",
                       "ml-3 rounded-md px-3 py-2 text-lg font-medium"
@@ -95,10 +98,14 @@ export default function Header() {
               as="a"
               href={item?.href}
               aria-current={
-                item?.href?.split("?")[0] === pathName ? "page" : undefined
+                item?.href?.split("?")[0] === pathName ||
+                (item?.name === "บล็อก" && pathName.startsWith("/blog"))
+                  ? "page"
+                  : undefined
               }
               className={classNames(
-                item?.href?.split("?")[0] === pathName
+                item?.href?.split("?")[0] === pathName ||
+                  (item?.name === "บล็อก" && pathName.startsWith("/blog"))
                   ? "bg-gray-900 text-white"
                   : "text-gray-300 hover:bg-gray-700 hover:text-white",
                 "block rounded-md px-3 py-2 text-base font-medium"
