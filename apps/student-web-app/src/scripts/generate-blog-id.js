@@ -12,3 +12,4 @@ function generateUUID() {
 console.log("Generated UUID for new blog post:");
 console.log(generateUUID());
 console.log("\nYou can use this UUID as the key in your blog-posts.json file.");
+
