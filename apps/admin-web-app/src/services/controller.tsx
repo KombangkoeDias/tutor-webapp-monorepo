@@ -148,6 +148,11 @@ class AdminController extends BaseController {
     return this.handleResponse(resp);
   }
 
+  protected async GetAllJobs() {
+    const resp = await GET(ENDPOINTS.GET_ALL_JOBS);
+    return this.handleResponse(resp);
+  }
+
   private async getPresignedUploadURL(
     fileType: string,
     fileName?: string
@@ -299,6 +304,13 @@ class AdminControllerToaster extends AdminController {
     return toast.promise(
       super.JobSummary(),
       this.getToastConfig("กำลังโหลด job summary")
+    );
+  }
+
+  async GetAllJobs() {
+    return toast.promise(
+      super.GetAllJobs(),
+      this.getToastConfig("กำลังโหลดงานทั้งหมด")
     );
   }
 }

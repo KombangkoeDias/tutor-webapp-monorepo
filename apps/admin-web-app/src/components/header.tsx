@@ -27,7 +27,7 @@ import {
 } from "@ant-design/icons";
 import { ChildProcess } from "child_process";
 
-function classNames(...classes) {
+function classNames(...classes: (string | undefined | null | false)[]) {
   return classes.filter(Boolean).join(" ");
 }
 
@@ -36,19 +36,21 @@ const NotLoggedInNavigation: any[] = [];
 const LoggedInNavigation = [
   { name: "Dashboard", href: "/" },
   { name: "เพิ่ม Tag/วิชา", href: "/constants" },
-  { name: "คืนเงินติวเตอร์", href: "/tutor/refund" },
-  {
-    name: "ดู referral code/ สร้าง link ที่มี referral code",
-    href: "/job/referral",
-  },
 ];
 
-const dropDownList = [
+// Job Management Dropdown
+const jobManagementItems = [
   {
-    name: "ดูติวเตอร์ทั้งหมด/ รีวิวติวเตอร์",
-    href: "/tutor/list",
+    name: "ดูงานทั้งหมด (รายละเอียด)",
+    href: "/job/all",
     disabled: false,
-    icon: <UserOutlined />,
+    icon: <HddOutlined />,
+  },
+  {
+    name: "ดูงานที่จองได้ทั้งหมด",
+    href: "/job/list",
+    disabled: false,
+    icon: <HddOutlined />,
   },
   {
     name: "copy งานที่จองได้",
@@ -57,11 +59,31 @@ const dropDownList = [
     icon: <HddOutlined />,
   },
   {
-    name: "ดูงานทั้งหมด",
-    href: "/job/list",
+    name: "ดู referral code/ สร้าง link ที่มี referral code",
+    href: "/job/referral",
     disabled: false,
     icon: <HddOutlined />,
   },
+];
+
+// Tutor Management Dropdown
+const tutorManagementItems = [
+  {
+    name: "ดูติวเตอร์ทั้งหมด/ รีวิวติวเตอร์",
+    href: "/tutor/list",
+    disabled: false,
+    icon: <UserOutlined />,
+  },
+  {
+    name: "คืนเงินติวเตอร์",
+    href: "/tutor/refund",
+    disabled: false,
+    icon: <UserOutlined />,
+  },
+];
+
+// Financial Management Dropdown
+const financialManagementItems = [
   {
     name: "รีวิว slip โอนเงินค่าแนะนำ",
     href: "/reservations/slip",
@@ -70,24 +92,33 @@ const dropDownList = [
   },
 ];
 
-const items: MenuProps["items"] = dropDownList.map((item, index) => {
-  return {
-    key: index.toString(),
-    label: (
-      <a
-        key={index.toString()}
-        href={item.href}
-        className="rounded-md px-3 py-2 text-sm font-medium"
-      >
-        {item.name}
-      </a>
-    ),
-    icon: item.icon,
-    disabled: item.disabled,
-    type: item.type,
-    children: item.children,
-  };
-});
+// Helper function to create dropdown items
+const createDropdownItems = (items: any[]): MenuProps["items"] => {
+  return items.map((item, index) => {
+    return {
+      key: index.toString(),
+      label: (
+        <a
+          key={index.toString()}
+          href={item.href}
+          className="rounded-md px-3 py-2 text-sm font-medium"
+        >
+          {item.name}
+        </a>
+      ),
+      icon: item.icon,
+      disabled: item.disabled,
+      type: item.type,
+      children: item.children,
+    };
+  });
+};
+
+const jobManagementDropdownItems = createDropdownItems(jobManagementItems);
+const tutorManagementDropdownItems = createDropdownItems(tutorManagementItems);
+const financialManagementDropdownItems = createDropdownItems(
+  financialManagementItems
+);
 
 export default function Header() {
   const { loggedIn, setLoggedIn } = useLoggedIn();
@@ -119,15 +150,38 @@ export default function Header() {
     ));
 
     if (loggedIn) {
-      nav.splice(
-        1,
-        0,
-        <Dropdown menu={{ items }}>
-          <a
-            key={"dropdown"}
-            className="text-white text-sm rounded-md px-3 py-2 cursor-pointer"
-          >
-            จัดการข้อมูลติวเตอร์,นักเรียน <DownOutlined />
+      // Add Job Management dropdown
+      nav.push(
+        <Dropdown
+          menu={{ items: jobManagementDropdownItems }}
+          key="job-management"
+        >
+          <a className="text-white text-sm rounded-md px-3 py-2 cursor-pointer">
+            จัดการงาน <DownOutlined />
+          </a>
+        </Dropdown>
+      );
+
+      // Add Tutor Management dropdown
+      nav.push(
+        <Dropdown
+          menu={{ items: tutorManagementDropdownItems }}
+          key="tutor-management"
+        >
+          <a className="text-white text-sm rounded-md px-3 py-2 cursor-pointer">
+            จัดการติวเตอร์ <DownOutlined />
+          </a>
+        </Dropdown>
+      );
+
+      // Add Financial Management dropdown
+      nav.push(
+        <Dropdown
+          menu={{ items: financialManagementDropdownItems }}
+          key="financial-management"
+        >
+          <a className="text-white text-sm rounded-md px-3 py-2 cursor-pointer">
+            การเงิน <DownOutlined />
           </a>
         </Dropdown>
       );
