@@ -37,6 +37,8 @@ type DatePickerProps = {
   disable?: (date: any) => any;
   className?: string;
   popOverDisabled?: boolean;
+  startMonth?: Date;
+  endMonth?: Date;
 };
 
 export const DatePickerComponent = ({
@@ -53,6 +55,8 @@ export const DatePickerComponent = ({
   disable = undefined,
   className = "",
   popOverDisabled = false,
+  startMonth,
+  endMonth,
 }: DatePickerProps) => {
   const dateValue = new Date(form.getValues(name));
   const dateString = `${dateValue.toLocaleDateString("th-TH", {
@@ -104,6 +108,8 @@ export const DatePickerComponent = ({
                     captionLayout="dropdown"
                     selected={field.value}
                     onSelect={field.onChange}
+                    {...(startMonth && { startMonth })}
+                    {...(endMonth && { endMonth })}
                     disabled={
                       disable
                         ? disable

@@ -856,6 +856,8 @@ function JobCreationForm() {
                   disable={(date) => date < new Date()}
                   className="border-pink-200"
                   readOnly={false}
+                  startMonth={new Date()}
+                  endMonth={new Date(new Date().getFullYear() + 1, 11, 31)}
                 />
                 <Field
                   form={form}
