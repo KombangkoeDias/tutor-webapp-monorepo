@@ -9,7 +9,6 @@ import {
 } from "antd";
 import { useQuery } from "@tanstack/react-query";
 import { adminController } from "@/services/controller";
-import { useAuthRedirect } from "@/components/hooks/use-auth-redirect";
 import { variantButtonClassName } from "@/chulatutordream/lib/constants";
 import { Button } from "@/components/ui/button";
 import _ from "lodash";
@@ -27,8 +26,6 @@ type TutorReviewData = {
 };
 
 export default function TutorReviewListPage() {
-  useAuthRedirect();
-
   const [activeKeys, setActiveKeys] = useState<Set<number>>(new Set());
 
   const addKey = (key: number) => {

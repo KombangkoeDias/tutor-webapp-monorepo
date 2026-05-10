@@ -3,7 +3,6 @@ import React from "react";
 import { Table, Image, Popconfirm, Button } from "antd";
 import { useQuery } from "@tanstack/react-query";
 import { adminController } from "@/services/controller";
-import { useAuthRedirect } from "@/components/hooks/use-auth-redirect";
 
 const ReservationTable = () => {
   const { data, isFetching, refetch } = useQuery({

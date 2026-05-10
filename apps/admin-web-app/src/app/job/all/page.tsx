@@ -4,7 +4,6 @@ import { Table, Typography, Tag, Tooltip } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useQuery } from "@tanstack/react-query";
 import { adminController } from "@/services/controller";
-import { useAuthRedirect } from "@/components/hooks/use-auth-redirect";
 import { format } from "date-fns";
 import { th } from "date-fns/locale";
 import { useState, useEffect } from "react";
@@ -81,8 +80,6 @@ interface JobData {
 }
 
 const AllJobsPage = () => {
-  useAuthRedirect();
-
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 50,
@@ -365,7 +362,7 @@ const AllJobsPage = () => {
         </div>
 
         <AlwaysScrollTable
-          columns={generateColumns()}
+          columns={generateColumns() as any}
           dataSource={data || []}
           rowKey="id"
           className="border border-gray-200 rounded-lg"

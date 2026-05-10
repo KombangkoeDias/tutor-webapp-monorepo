@@ -1,13 +1,11 @@
 "use client";
 
 import { useSharedConstants } from "@/components/hooks/constant-context";
-import { useAuthRedirect } from "@/components/hooks/use-auth-redirect";
 import { adminController } from "@/services/controller";
 import { Skeleton, Tag, Input, Button } from "antd";
 import { useState } from "react";
 
 export default function ConstantsPage() {
-  useAuthRedirect();
   const { isLoading, subjects, tags, refetchSubjects, refetchTags } =
     useSharedConstants();
   // show all subjects in one row
