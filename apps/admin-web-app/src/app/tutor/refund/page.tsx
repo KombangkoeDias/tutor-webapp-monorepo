@@ -12,7 +12,6 @@ import {
 import { Input as InputShadCN } from "@/components/ui/input";
 import { useQuery } from "@tanstack/react-query";
 import { adminController } from "@/services/controller";
-import { useAuthRedirect } from "@/components/hooks/use-auth-redirect";
 import {
   mapReservationStatusToColor,
   ReservationStatus,
@@ -51,7 +50,6 @@ type ReservationData = {
 };
 
 export default function TutorReviewListPage() {
-  useAuthRedirect();
   const [jobId, setJobId] = useState<number>();
   const [openDrawer, setOpenDrawer] = useState(false);
   const { styles } = useTableStyle();

@@ -4,7 +4,7 @@ export const JWT_TOKEN_KEY = "JWTToken";
 
 let axiosClient = axios.create({
   baseURL:
-    process.env.NEXT_PUBLIC_BACKEND_URL_TEST ||
+    process.env.NEXT_PUBLIC_BACKEND_URL ||
     "https://test.api.jobtutordream.com/api/v1",
   timeout: 60000,
   headers: {
@@ -25,7 +25,7 @@ axiosClient.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 function needAuthorizationHeader(url: string) {

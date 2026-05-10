@@ -6,7 +6,6 @@ import { ArrowUpRight, CopyIcon } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { adminController } from "@/services/controller";
 import toast from "react-hot-toast";
-import { useAuthRedirect } from "@/components/hooks/use-auth-redirect";
 
 const { Title } = Typography;
 
@@ -18,7 +17,6 @@ interface JobData {
 }
 
 const JobListTable = () => {
-  useAuthRedirect();
   const { data, isFetching, refetch } = useQuery({
     queryKey: ["getAllJobList"],
     queryFn: async () => {

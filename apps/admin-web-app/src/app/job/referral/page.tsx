@@ -14,7 +14,6 @@ import {
   handleListReferredJobsLink,
   handleSignUpLink,
 } from "@/chulatutordream/lib/utils";
-import { useAuthRedirect } from "@/components/hooks/use-auth-redirect";
 import { useRouter } from "next/navigation";
 
 enum CreateCodeOptions {
@@ -23,7 +22,6 @@ enum CreateCodeOptions {
 }
 
 export default function () {
-  useAuthRedirect();
   const [name, setName] = useState<string>("");
   const [tutor, setTutor] = useState<
     { label: string; value: number } | undefined

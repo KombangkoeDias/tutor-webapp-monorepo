@@ -7,6 +7,8 @@ import Header from "@/components/header";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ConstantProvider } from "@/components/hooks/constant-context";
 import { Suspense } from "react";
+import { usePathname } from "next/navigation";
+import { useAuthRedirect } from "@/components/hooks/use-auth-redirect";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,6 +20,15 @@ const queryClient = new QueryClient({
   },
 });
 
+function AuthRedirectGuard() {
+  const pathname = usePathname();
+  const isLoginPage = pathname === "/login";
+
+  useAuthRedirect({ disabled: isLoginPage });
+
+  return null;
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -27,6 +38,7 @@ export default function RootLayout({
     <QueryClientProvider client={queryClient}>
       <LoggedInProvider>
         <ConstantProvider>
+          <AuthRedirectGuard />
           <html>
             <head>
               <link rel="icon" href="https://i.ibb.co/99Kgt3d2/favicon.png" />

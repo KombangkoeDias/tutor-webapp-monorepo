@@ -9,7 +9,6 @@ import {
 } from "antd";
 import { useQuery } from "@tanstack/react-query";
 import { adminController } from "@/services/controller";
-import { useAuthRedirect } from "@/components/hooks/use-auth-redirect";
 import { useTableStyle } from "@/chulatutordream/lib/constants";
 import { getLatestComment } from "@/components/hooks/login-context";
 import { Button } from "@/components/ui/button";
@@ -28,7 +27,6 @@ type TutorReviewData = {
 };
 
 export default function TutorReviewListPage() {
-  useAuthRedirect();
   const [tutorId, setTutorId] = useState<number>();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [isEditProfileTutor, setIsEditProfileTutor] = useState(false);
