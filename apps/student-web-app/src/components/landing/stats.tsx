@@ -5,14 +5,14 @@ import { useInView } from "react-intersection-observer";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import {
-  Briefcase,
   Users,
   GraduationCap,
+  BookOpen,
   Wifi,
-  TrendingUp,
   Sparkles,
+  Search,
 } from "lucide-react";
-import { publicController } from "@/services/controller/public";
+import { publicController } from "@/chulatutordream/services/controller/public";
 
 function AnimatedNumber({
   value,
@@ -76,7 +76,7 @@ function StatCard({
           {icon}
         </div>
         <p className="text-gray-500 text-sm mb-1">{label}</p>
-        <p className="text-3xl md:text-4xl font-bold text-[#263238]">
+        <p className="text-3xl md:text-4xl font-bold text-gray-800">
           <AnimatedNumber
             value={value}
             inView={inView}
@@ -89,7 +89,7 @@ function StatCard({
   );
 }
 
-function StatsSection() {
+export default function StatsSection() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.15 });
   const { data: stats } = useQuery({
     queryKey: ["publicStats"],
@@ -97,17 +97,17 @@ function StatsSection() {
     staleTime: 5 * 60 * 1000,
   });
 
-  const s = stats?.tutor;
+  const s = stats?.student;
   const topSubjects = s?.top_open_subjects ?? [];
 
   return (
     <section
       ref={ref}
-      className="relative py-20 overflow-hidden bg-gradient-to-b from-white via-emerald-50/50 to-teal-50"
+      className="relative py-20 overflow-hidden bg-gradient-to-b from-pink-50 via-white to-purple-50/50"
     >
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-10 right-1/4 w-72 h-72 rounded-full bg-teal-200/30 blur-3xl" />
-        <div className="absolute bottom-10 left-1/4 w-64 h-64 rounded-full bg-emerald-200/30 blur-3xl" />
+        <div className="absolute top-10 left-1/4 w-72 h-72 rounded-full bg-pink-200/30 blur-3xl" />
+        <div className="absolute bottom-10 right-1/4 w-64 h-64 rounded-full bg-purple-200/30 blur-3xl" />
       </div>
 
       <div className="container relative mx-auto px-4">
@@ -118,17 +118,17 @@ function StatsSection() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <span className="inline-flex items-center gap-1.5 px-4 py-1 rounded-full bg-emerald-100 text-emerald-800 text-sm font-medium mb-4">
+          <span className="inline-flex items-center gap-1.5 px-4 py-1 rounded-full bg-pink-100 text-pink-800 text-sm font-medium mb-4">
             <Sparkles className="w-4 h-4" />
-            โอกาสรอคุณอยู่ตรงนี้
+            ไว้ใจได้ด้วยตัวเลขจริง
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-[#263238]">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-teal-600">
-              ความต้องการติวเตอร์จริง จากนักเรียนจริง
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-600">
+              ติวเตอร์คุณภาพ พร้อมสอนให้คุณ
             </span>
           </h2>
           <p className="mt-3 text-gray-600 max-w-xl mx-auto">
-            ดูงานที่เปิดอยู่ตอนนี้ แล้วเลือกจองได้เลย — ไม่ต้องรอให้ระบบจับคู่
+            โพสต์งานแล้วรอติวเตอร์มาจอง — เลือกคนที่ใช่ได้เอง
           </p>
         </motion.div>
 
@@ -140,45 +140,32 @@ function StatsSection() {
           viewport={{ once: true }}
           className="relative max-w-3xl mx-auto mb-10"
         >
-          <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 opacity-60 blur-lg" />
-          <div className="relative bg-gradient-to-br from-emerald-600 to-teal-700 rounded-3xl px-8 py-10 text-center text-white shadow-xl">
-            <Briefcase className="w-10 h-10 mx-auto mb-3 opacity-90" />
-            <p className="text-emerald-100 text-lg mb-1">งานที่เปิดรับจองอยู่ตอนนี้</p>
+          <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-pink-400 via-purple-400 to-fuchsia-400 opacity-60 blur-lg" />
+          <div className="relative bg-gradient-to-br from-pink-500 to-purple-600 rounded-3xl px-8 py-10 text-center text-white shadow-xl">
+            <GraduationCap className="w-10 h-10 mx-auto mb-3 opacity-90" />
+            <p className="text-pink-100 text-lg mb-1">
+              ติวเตอร์ที่ผ่านการคัดเลือก
+            </p>
             <p className="text-6xl md:text-7xl font-bold tracking-tight">
-              <AnimatedNumber value={s?.open_jobs ?? 0} inView={inView} />
-              <span className="text-3xl md:text-4xl font-semibold ml-2">งาน</span>
+              <AnimatedNumber value={s?.verified_tutors ?? 0} inView={inView} />
+              <span className="text-3xl md:text-4xl font-semibold ml-2">คน</span>
             </p>
             {(s?.avg_hourly_fee ?? 0) > 0 && (
-              <div className="mt-5 flex flex-wrap justify-center gap-x-6 gap-y-2 text-emerald-100">
-                <span className="flex items-center gap-1.5">
-                  <TrendingUp className="w-4 h-4" />
-                  ค่าสอนเฉลี่ย{" "}
-                  <strong className="text-white">
-                    ฿
-                    <AnimatedNumber
-                      value={s?.avg_hourly_fee ?? 0}
-                      inView={inView}
-                    />
-                    /ชม.
-                  </strong>
-                </span>
-                <span>
-                  สูงสุด{" "}
-                  <strong className="text-white">
-                    ฿
-                    <AnimatedNumber
-                      value={s?.max_hourly_fee ?? 0}
-                      inView={inView}
-                    />
-                    /ชม.
-                  </strong>
-                </span>
-              </div>
+              <p className="mt-5 text-pink-100">
+                ค่าสอนเฉลี่ยของงานที่เปิดอยู่{" "}
+                <strong className="text-white">
+                  ฿
+                  <AnimatedNumber
+                    value={s?.avg_hourly_fee ?? 0}
+                    inView={inView}
+                  />
+                  /ชม.
+                </strong>
+              </p>
             )}
           </div>
         </motion.div>
 
-        {/* Stat cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto mb-10">
           <StatCard
             icon={<Users className="w-5 h-5" />}
@@ -190,22 +177,22 @@ function StatsSection() {
             accent="from-violet-400 to-purple-500"
           />
           <StatCard
-            icon={<GraduationCap className="w-5 h-5" />}
-            label="ติวเตอร์ที่ผ่านการคัดเลือก"
-            value={s?.verified_tutors ?? 0}
-            suffix=" คน"
+            icon={<Search className="w-5 h-5" />}
+            label="งานที่เปิดอยู่ตอนนี้"
+            value={s?.open_jobs ?? 0}
+            suffix=" งาน"
             inView={inView}
             delay={0.25}
-            accent="from-blue-400 to-indigo-500"
+            accent="from-pink-400 to-rose-500"
           />
           <StatCard
-            icon={<Briefcase className="w-5 h-5" />}
+            icon={<BookOpen className="w-5 h-5" />}
             label="งานทั้งหมดบนแพลตฟอร์ม"
             value={s?.total_jobs ?? 0}
             suffix=" งาน"
             inView={inView}
             delay={0.35}
-            accent="from-rose-400 to-pink-500"
+            accent="from-fuchsia-400 to-pink-500"
           />
           <StatCard
             icon={<Wifi className="w-5 h-5" />}
@@ -214,29 +201,19 @@ function StatsSection() {
             suffix=" งาน"
             inView={inView}
             delay={0.45}
-            accent="from-cyan-400 to-teal-500"
+            accent="from-cyan-400 to-blue-500"
           />
           <StatCard
             icon={<Sparkles className="w-5 h-5" />}
-            label="วิชาที่เปิดรับ"
+            label="วิชาที่มีติวเตอร์รองรับ"
             value={s?.subject_count ?? 0}
             suffix=" วิชา"
             inView={inView}
             delay={0.55}
             accent="from-amber-400 to-orange-500"
           />
-          <StatCard
-            icon={<TrendingUp className="w-5 h-5" />}
-            label="การจองงานทั้งหมด"
-            value={s?.total_reservations ?? 0}
-            suffix=" ครั้ง"
-            inView={inView}
-            delay={0.65}
-            accent="from-emerald-400 to-green-500"
-          />
         </div>
 
-        {/* Top subjects */}
         {topSubjects.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -246,16 +223,16 @@ function StatsSection() {
             className="max-w-3xl mx-auto text-center"
           >
             <p className="text-gray-500 text-sm mb-3">
-              วิชาที่มีงานเปิดอยู่ตอนนี้
+              วิชาที่มีติวเตอร์กำลังหางานอยู่
             </p>
             <div className="flex flex-wrap justify-center gap-2">
               {topSubjects.map(({ subject, count }) => (
                 <span
                   key={subject}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white border border-emerald-200 text-[#263238] text-sm font-medium shadow-sm"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white border border-pink-200 text-gray-800 text-sm font-medium shadow-sm"
                 >
                   {subject}
-                  <span className="text-emerald-600 font-bold">{count}</span>
+                  <span className="text-pink-600 font-bold">{count}</span>
                 </span>
               ))}
             </div>
@@ -265,5 +242,3 @@ function StatsSection() {
     </section>
   );
 }
-
-export default StatsSection;
