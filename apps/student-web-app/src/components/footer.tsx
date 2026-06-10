@@ -14,7 +14,7 @@ export default function Footer() {
               width={130} // Set the width of the image
               height={60}
             />
-            <h3 className="font-bold mb-4">Chula Tutor Dream</h3>
+            <p className="font-bold mb-4">Chula Tutor Dream</p>
             <p className="text-sm text-gray-400">Copyright © 2025</p>
             <p className="text-sm text-gray-400">All rights reserved</p>
           </div>

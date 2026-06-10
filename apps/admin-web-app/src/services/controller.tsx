@@ -153,6 +153,11 @@ class AdminController extends BaseController {
     return this.handleResponse(resp);
   }
 
+  protected async GetDashboardStats() {
+    const resp = await GET(ENDPOINTS.DASHBOARD_STATS);
+    return this.handleResponse(resp);
+  }
+
   private async getPresignedUploadURL(
     fileType: string,
     fileName?: string
@@ -312,6 +317,10 @@ class AdminControllerToaster extends AdminController {
       super.GetAllJobs(),
       this.getToastConfig("กำลังโหลดงานทั้งหมด")
     );
+  }
+
+  async GetDashboardStats() {
+    return this.showToastOnError(() => super.GetDashboardStats());
   }
 }
 

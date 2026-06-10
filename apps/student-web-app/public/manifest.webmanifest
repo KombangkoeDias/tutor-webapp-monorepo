@@ -1,0 +1,17 @@
+{
+  "name": "Chula Tutor Dream",
+  "short_name": "CTD",
+  "description": "หาติวเตอร์สอนพิเศษคุณภาพ ทุกระดับชั้น ทุกวิชา",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#F8D3DA",
+  "lang": "th",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

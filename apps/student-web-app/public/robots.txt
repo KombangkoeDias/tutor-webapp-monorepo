@@ -1,6 +1,7 @@
 # *
 User-agent: *
 Allow: /
+Disallow: /jobs/reservation/list
 
 # Host
 Host: https://chulatutordream.com

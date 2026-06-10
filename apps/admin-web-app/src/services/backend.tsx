@@ -21,4 +21,5 @@ export const ENDPOINTS = {
   JOB_SUMMARY: "/admin/jobs/summary",
   GET_ALL_JOBS: "/admin/data/jobs",
   PAYOUTS: "/admin/referral/pending_payout",
+  DASHBOARD_STATS: "/admin/dashboard/stats",
 };
