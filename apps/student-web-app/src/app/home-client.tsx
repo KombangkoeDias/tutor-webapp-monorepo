@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import Features from "@/components/landing/features";
 import Process from "@/components/landing/process";
 import TutorsSection from "@/components/landing/tutors";
+import StatsSection from "@/components/landing/stats";
 import { motion } from "framer-motion";
 import { Sparkles, BookOpen, ArrowRight } from "lucide-react";
 
@@ -71,15 +72,14 @@ function ContinuousReviewCarousel() {
       {/* <div className="absolute bottom-40 left-1/3 w-80 h-80 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div> */}
 
       <div className="relative">
-        <div className="flex justify-center mb-12">
-          <div className="container px-4 md:px-6">
+        <div className="container mx-auto px-4 md:px-6 mb-12">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="flex flex-col items-center justify-center space-y-6 text-center"
+              className="flex flex-col items-center text-center"
             >
-              <div className="space-y-4">
+              <div className="w-full max-w-3xl mx-auto space-y-5">
                 <motion.h1
                   className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-600"
                   initial={{ scale: 0.9 }}
@@ -89,10 +89,10 @@ function ContinuousReviewCarousel() {
                   Chula Tutor Dream — หาติวเตอร์ส่วนตัว เรียนพิเศษ
                 </motion.h1>
                 <div className="flex justify-center">
-                  <div className="w-24 h-1 bg-gradient-to-r from-pink-400 to-purple-500 rounded-full mb-4"></div>
+                  <div className="w-24 h-1 bg-gradient-to-r from-pink-400 to-purple-500 rounded-full" />
                 </div>
                 <motion.p
-                  className="max-w-[700px] text-gray-700 md:text-xl"
+                  className="mx-auto text-gray-700 text-base md:text-xl leading-relaxed"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.3, duration: 0.8 }}
@@ -101,17 +101,18 @@ function ContinuousReviewCarousel() {
                   มีนักเรียนมาติวกับเรามากมาย
                 </motion.p>
                 <motion.p
-                  className="max-w-[700px] text-gray-600 md:text-md"
+                  className="mx-auto text-gray-600 text-sm md:text-base leading-relaxed"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5, duration: 0.8 }}
                 >
-                  มีติวเตอร์จากจุฬา
-                  ธรรมศาสตร์มีทั้งจบการศึกษาแล้วและกำลังศึกษาอยู่จากคณะแพทย์
-                  วิศวะ และอื่นๆให้เลือก ทั้งจบจากไทยและจากมหาวิทยาลัยต่างประเทศ
+                  มีติวเตอร์จากจุฬาฯ และธรรมศาสตร์
+                  ทั้งจบการศึกษาแล้วและกำลังศึกษาอยู่ จากคณะแพทย์ วิศวะ
+                  และอื่นๆ ให้เลือก ทั้งจบจากไทยและจากมหาวิทยาลัยต่างประเทศ
                 </motion.p>
               </div>
               <motion.div
+                className="mt-8"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
@@ -125,9 +126,10 @@ function ContinuousReviewCarousel() {
                 </Button>
               </motion.div>
             </motion.div>
-          </div>
         </div>
       </div>
+
+      <StatsSection />
 
       {/* Blog Banner */}
       <motion.div

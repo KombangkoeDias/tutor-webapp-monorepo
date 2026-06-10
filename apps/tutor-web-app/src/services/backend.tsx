@@ -66,6 +66,7 @@ export const ENDPOINTS = {
   LIST_BY_REFERRAL: "/tutor/list_by_referral",
   FORGET_PASSWORD_ENDPOINT: "/tutor/forget_password",
   RESET_PASSWORD_ENDPOINT: "/tutor/reset_password",
+  PUBLIC_STATS: "/public/stats",
 };
 
 export const toastCaption = {

@@ -29,7 +29,7 @@ export default function TutorLanding() {
       {!loggedIn && (
         <>
           <HeroComponentNotLoggedIn.default />
-          {/* <StatsSection /> */}
+          <StatsSection />
           <Features />
           <Process />
         </>
