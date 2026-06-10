@@ -5,7 +5,7 @@ export const JWT_TOKEN_KEY = "JWTToken";
 let axiosClient = axios.create({
   baseURL:
     process.env.NEXT_PUBLIC_BACKEND_URL ||
-    "http://api.jobtutordream.com/api/v1",
+    "https://api.jobtutordream.com/api/v1",
   timeout: 60000,
   headers: {
     "Content-Type": "application/json",
