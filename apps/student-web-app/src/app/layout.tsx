@@ -1,28 +1,75 @@
 import "./globals.css";
 import ClientLayout from "./ClientLayout";
+import JsonLd from "@/components/seo/json-ld";
 import type { Metadata } from "next";
+import {
+  DEFAULT_DESCRIPTION,
+  DEFAULT_KEYWORDS,
+  DEFAULT_TITLE,
+  SITE_NAME,
+  SITE_URL,
+  organizationJsonLd,
+  websiteJsonLd,
+} from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title:
-    "Chula Tutor Dream | หาติวเตอร์ส่วนตัว เรียนพิเศษ ทุกระดับชั้น ทุกวิชา",
-  description: "หาติวเตอร์สอนพิเศษทุกระดับชั้นทุกวิชา",
-  keywords: ["หาติวเตอร์", "เรียนเพิ่มเติม", "เรียนพิเศษ", "เรียนออนไลน์"],
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: DEFAULT_TITLE,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: DEFAULT_DESCRIPTION,
+  keywords: DEFAULT_KEYWORDS,
+  applicationName: SITE_NAME,
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
-    title:
-      "Chula Tutor Dream | หาติวเตอร์ส่วนตัว เรียนพิเศษ ทุกระดับชั้น ทุกวิชา",
-    description: "หาติวเตอร์สอนพิเศษทุกระดับชั้นทุกวิชา",
-    url: "https://chulatutordream.com",
-    siteName: "Chula Tutor Dream",
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    url: SITE_URL,
+    siteName: SITE_NAME,
     images: [
       {
-        url: "https://chulatutordream.com/favicon.png",
-        width: 800,
-        height: 800,
+        url: "/logo.png",
+        width: 1200,
+        height: 630,
+        alt: SITE_NAME,
       },
     ],
     locale: "th_TH",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    images: ["/logo.png"],
+  },
+  icons: {
+    icon: "/favicon.png",
+    apple: "/favicon.png",
+  },
+  manifest: "/manifest.webmanifest",
 };
 
 export default function RootLayout({
@@ -34,13 +81,16 @@ export default function RootLayout({
     <html lang="th">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
         <link
           href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;700&display=swap"
           rel="stylesheet"
         />
-        <link rel="icon" href="https://i.ibb.co/7NVLT3LT/favicon.png" />
-        <title>Chula Tutor Dream</title>
+        <JsonLd data={[organizationJsonLd(), websiteJsonLd()]} />
       </head>
       <body>
         <ClientLayout>{children}</ClientLayout>
