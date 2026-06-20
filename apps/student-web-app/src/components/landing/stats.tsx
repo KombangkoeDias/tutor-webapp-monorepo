@@ -150,19 +150,6 @@ export default function StatsSection() {
               <AnimatedNumber value={s?.verified_tutors ?? 0} inView={inView} />
               <span className="text-3xl md:text-4xl font-semibold ml-2">คน</span>
             </p>
-            {(s?.avg_hourly_fee ?? 0) > 0 && (
-              <p className="mt-5 text-pink-100">
-                ค่าสอนเฉลี่ยของงานที่เปิดอยู่{" "}
-                <strong className="text-white">
-                  ฿
-                  <AnimatedNumber
-                    value={s?.avg_hourly_fee ?? 0}
-                    inView={inView}
-                  />
-                  /ชม.
-                </strong>
-              </p>
-            )}
           </div>
         </motion.div>
 

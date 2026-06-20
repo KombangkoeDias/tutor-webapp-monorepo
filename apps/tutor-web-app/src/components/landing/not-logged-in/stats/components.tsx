@@ -148,33 +148,6 @@ function StatsSection() {
               <AnimatedNumber value={s?.open_jobs ?? 0} inView={inView} />
               <span className="text-3xl md:text-4xl font-semibold ml-2">งาน</span>
             </p>
-            {(s?.avg_hourly_fee ?? 0) > 0 && (
-              <div className="mt-5 flex flex-wrap justify-center gap-x-6 gap-y-2 text-emerald-100">
-                <span className="flex items-center gap-1.5">
-                  <TrendingUp className="w-4 h-4" />
-                  ค่าสอนเฉลี่ย{" "}
-                  <strong className="text-white">
-                    ฿
-                    <AnimatedNumber
-                      value={s?.avg_hourly_fee ?? 0}
-                      inView={inView}
-                    />
-                    /ชม.
-                  </strong>
-                </span>
-                <span>
-                  สูงสุด{" "}
-                  <strong className="text-white">
-                    ฿
-                    <AnimatedNumber
-                      value={s?.max_hourly_fee ?? 0}
-                      inView={inView}
-                    />
-                    /ชม.
-                  </strong>
-                </span>
-              </div>
-            )}
           </div>
         </motion.div>
 
